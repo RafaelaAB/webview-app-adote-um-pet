@@ -1,0 +1,294 @@
+/* ── Hero ── */
+.hero {
+  background: linear-gradient(135deg, var(--color-bg) 0%, var(--color-primary-bg) 100%);
+  padding-block: var(--space-20) var(--space-24);
+  overflow: hidden;
+}
+
+.heroInner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: var(--space-12);
+}
+
+.heroContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.heroBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background-color: var(--color-primary-bg);
+  color: var(--color-primary-dark);
+  border: 1px solid rgba(249, 115, 22, 0.2);
+  border-radius: var(--radius-full);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  width: fit-content;
+}
+
+.heroTitle {
+  letter-spacing: -1px;
+  color: var(--color-text-primary);
+}
+
+.heroHighlight {
+  color: var(--color-primary);
+  position: relative;
+}
+
+.heroText {
+  font-size: 1.0625rem;
+  color: var(--color-text-secondary);
+  max-width: 480px;
+}
+
+.heroCtas {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+/* Hero Illustration */
+.heroIllustration {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  align-items: flex-end;
+}
+
+.heroCard {
+  background-color: var(--color-white);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6) var(--space-8);
+  box-shadow: var(--shadow-md);
+  text-align: center;
+  min-width: 200px;
+}
+
+.heroCard p {
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.heroCardAccent {
+  background-color: var(--color-primary);
+  margin-right: var(--space-8);
+}
+
+.heroCardAccent p {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.heroEmoji {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: var(--space-3);
+}
+
+/* ── Sections ── */
+.section {
+  padding-block: var(--space-20);
+}
+
+.petsSection {
+  background-color: var(--color-bg-section);
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: var(--space-12);
+  max-width: 600px;
+  margin-inline: auto;
+  margin-bottom: var(--space-12);
+}
+
+.sectionTitle {
+  margin-bottom: var(--space-4);
+  color: var(--color-text-primary);
+}
+
+.sectionSubtitle {
+  font-size: 1.0625rem;
+  color: var(--color-text-secondary);
+}
+
+/* Pets Grid */
+.petsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-6);
+}
+
+.seeAll {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-10);
+}
+
+/* Loading skeletons */
+.loadingGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-6);
+}
+
+.skeleton {
+  height: 300px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(
+    90deg,
+    var(--color-border-light) 25%,
+    var(--color-border) 50%,
+    var(--color-border-light) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ── CTA ── */
+.ctaSection {
+  background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-light) 100%);
+  padding-block: var(--space-20);
+}
+
+.ctaInner {
+  display: flex;
+  justify-content: center;
+}
+
+.ctaContent {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  max-width: 560px;
+}
+
+.ctaEmoji {
+  font-size: 3rem;
+}
+
+.ctaTitle {
+  color: #ffffff;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.ctaText {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.0625rem;
+}
+
+/* ── About ── */
+.aboutSection {
+  background-color: var(--color-bg);
+}
+
+.aboutInner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-16);
+  align-items: start;
+}
+
+.aboutText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.aboutText p {
+  font-size: 1.0125rem;
+}
+
+/* Stats */
+.aboutStats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  align-self: center;
+}
+
+.statCard {
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border-light);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  text-align: center;
+}
+
+.statValue {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--color-primary);
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .petsGrid,
+  .loadingGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .heroInner {
+    grid-template-columns: 1fr;
+  }
+
+  .heroIllustration {
+    display: none;
+  }
+
+  .aboutInner {
+    grid-template-columns: 1fr;
+    gap: var(--space-10);
+  }
+
+  .aboutStats {
+    order: -1;
+  }
+}
+
+@media (max-width: 540px) {
+  .petsGrid,
+  .loadingGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .heroCtas {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .aboutStats {
+    grid-template-columns: 1fr 1fr;
+  }
+}

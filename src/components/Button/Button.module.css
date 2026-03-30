@@ -1,0 +1,103 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Sizes */
+.sm {
+  font-size: 0.8125rem;
+  padding: var(--space-2) var(--space-4);
+  height: 36px;
+}
+
+.md {
+  font-size: 0.9375rem;
+  padding: var(--space-3) var(--space-6);
+  height: 46px;
+}
+
+.lg {
+  font-size: 1rem;
+  padding: var(--space-4) var(--space-8);
+  height: 54px;
+}
+
+/* Variants */
+.primary {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  border-color: var(--color-primary);
+  box-shadow: 0 2px 12px rgba(249, 115, 22, 0.3);
+}
+
+.primary:hover {
+  background-color: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
+  box-shadow: 0 4px 20px rgba(249, 115, 22, 0.4);
+}
+
+.secondary {
+  background-color: var(--color-secondary);
+  color: #ffffff;
+  border-color: var(--color-secondary);
+}
+
+.secondary:hover {
+  background-color: var(--color-secondary-light);
+  border-color: var(--color-secondary-light);
+}
+
+.outline {
+  background-color: transparent;
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.outline:hover {
+  background-color: var(--color-primary-bg);
+}
+
+.ghost {
+  background-color: transparent;
+  color: var(--color-text-secondary);
+  border-color: transparent;
+}
+
+.ghost:hover {
+  background-color: var(--color-border-light);
+  color: var(--color-text-primary);
+}
+
+/* Full width */
+.fullWidth {
+  width: 100%;
+}
