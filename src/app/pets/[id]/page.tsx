@@ -4,31 +4,7 @@
  * PÁGINA DE DETALHE DO PET — rota: /pets/[id]
  *
  * Exibe todas as informações de um pet específico.
- * O [id] entre colchetes é uma rota dinâmica do Next.js:
- * /pets/1 → mostra o pet com id "1"
- * /pets/3 → mostra o pet com id "3"
- *
- * O que é uma Rota Dinâmica?
- * ───────────────────────────
- * No Next.js App Router, uma pasta com nome entre colchetes (ex: [id])
- * cria uma rota dinâmica. O valor do segmento da URL fica disponível
- * via hook useParams().
- *
- * O que é o Router aqui?
- * ──────────────────────
- * Este arquivo usa DOIS recursos de navegação:
- *
- *   1. useParams() — hook do Next.js que lê os parâmetros da URL.
- *      Ex: na URL /pets/3, params.id será "3".
- *
- *   2. useRouter() — hook do Next.js que permite navegar programaticamente.
- *      router.back() volta para a página anterior no histórico do browser
- *      (equivalente ao botão "Voltar" do browser).
- *
- * Hooks usados:
- *   - useParams    → lê o id da URL
- *   - useRouter    → permite usar router.back()
- *   - usePetContext → acessa getPetById e loading do contexto global
+ * O [id] entre colchetes é uma rota dinâmica do Next.js.
  */
 
 import { useParams, useRouter } from 'next/navigation'
@@ -38,53 +14,34 @@ import { usePetContext } from '@/context/PetContext'
 import Button from '@/components/Button/Button'
 import styles from './pet-detail.module.css'
 
-/**
- * PetDetailPage — componente da página de detalhe do pet.
- */
 export default function PetDetailPage() {
-  /**
-   * useParams() lê os parâmetros dinâmicos da URL atual.
-   * Como a pasta se chama [id], o parâmetro disponível é params.id.
-   */
   const params = useParams()
-
-  /**
-   * useRouter() retorna o objeto router com métodos de navegação.
-   * Aqui usamos apenas router.back() para voltar à página anterior.
-   */
   const router = useRouter()
-
-  // Acessa os dados globais via contexto
   const { getPetById, loading } = usePetContext()
 
-  /**
-   * Garante que petId sempre seja uma string.
-   * params.id pode ser string ou string[] (em rotas catch-all) então
-   * normalizamos para string simples usando typeof e optional chaining (?.).
-   */
   const petId = typeof params.id === 'string' ? params.id : params.id?.[0] ?? ''
-
-  // Busca o pet pelo id extraído da URL
   const pet = getPetById(petId)
 
-  // Estado de carregamento: exibe um skeleton enquanto os dados chegam
   if (loading) {
     return (
       <div className={styles.page}>
-        <div className={`container ${styles.skeleton}`} aria-label="Carregando..." />
+        <div
+          data-testid="pet-detail-loading"
+          className={`container ${styles.skeleton}`}
+          aria-label="Carregando..."
+        />
       </div>
     )
   }
 
-  // Pet não encontrado: id inválido ou pet já foi removido
   if (!pet) {
     return (
       <div className={styles.page}>
-        <div className={`container ${styles.notFound}`}>
+        <div data-testid="pet-detail-not-found" className={`container ${styles.notFound}`}>
           <span className={styles.notFoundIcon}>🐾</span>
           <h2>Pet não encontrado</h2>
           <p>Esse pet pode já ter sido adotado ou não existe.</p>
-          <Button as="link" href="/pets">
+          <Button as="link" href="/pets" data-testid="pet-detail-btn-back-to-list">
             Ver todos os pets
           </Button>
         </div>
@@ -93,14 +50,12 @@ export default function PetDetailPage() {
   }
 
   return (
-    <div className={styles.page}>
+    <div data-testid="pet-detail-page" className={styles.page}>
       <div className="container">
 
-        {/**
-         * Botão Voltar — usa router.back() para navegar para a página anterior
-         * no histórico do browser, sem precisar saber qual era a URL anterior.
-         */}
+        {/* Botão Voltar */}
         <button
+          data-testid="pet-detail-btn-back"
           onClick={() => router.back()}
           className={styles.backBtn}
           aria-label="Voltar"
@@ -111,7 +66,7 @@ export default function PetDetailPage() {
 
         <div className={styles.detail}>
 
-          {/* Imagem do pet com badge de status sobreposto */}
+          {/* Imagem com badge de status */}
           <div className={styles.imageWrapper}>
             <Image
               src={pet.image}
@@ -119,69 +74,107 @@ export default function PetDetailPage() {
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
               className={styles.image}
-              priority   // priority=true carrega a imagem com alta prioridade (above the fold)
+              priority
               unoptimized
             />
-            {/* Badge de status (Disponível / Adotado / Pendente) */}
-            <span className={styles.statusBadge}>{pet.status}</span>
+            <span
+              data-testid="pet-detail-status"
+              className={styles.statusBadge}
+            >
+              {pet.status}
+            </span>
           </div>
 
-          {/* Painel de informações do pet */}
+          {/* Painel de informações */}
           <div className={styles.info}>
 
-            {/* Categoria, nome, raça e botão de favoritar */}
             <div className={styles.infoTop}>
               <div>
-                <span className={styles.category}>{pet.category}</span>
-                <h1 className={styles.name}>{pet.name}</h1>
-                <p className={styles.breed}>{pet.breed}</p>
+                <span
+                  data-testid="pet-detail-category"
+                  className={styles.category}
+                >
+                  {pet.category}
+                </span>
+                <h1
+                  data-testid="pet-detail-name"
+                  className={styles.name}
+                >
+                  {pet.name}
+                </h1>
+                <p
+                  data-testid="pet-detail-breed"
+                  className={styles.breed}
+                >
+                  {pet.breed}
+                </p>
               </div>
-              {/* Botão de favoritar — sem funcionalidade implementada ainda */}
-              <button className={styles.favoriteBtn} aria-label="Favoritar">
+              <button
+                data-testid="pet-detail-btn-favorite"
+                className={styles.favoriteBtn}
+                aria-label="Favoritar"
+              >
                 <Heart size={22} strokeWidth={1.8} />
               </button>
             </div>
 
-            {/* Localização com ícone */}
-            <div className={styles.location}>
+            {/* Localização */}
+            <div
+              data-testid="pet-detail-location"
+              className={styles.location}
+            >
               <MapPin size={16} className={styles.locationIcon} aria-hidden="true" />
               {pet.location}
             </div>
 
-            {/**
-             * Atributos do pet: Idade, Sexo, Porte.
-             * Usa .map() para não repetir o mesmo JSX 3 vezes.
-             */}
-            <div className={styles.attributes}>
+            {/* Atributos: Idade, Sexo, Porte */}
+            <div data-testid="pet-detail-attributes" className={styles.attributes}>
               {[
                 { label: 'Idade', value: pet.age },
                 { label: 'Sexo', value: pet.gender },
                 { label: 'Porte', value: pet.size },
               ].map((attr) => (
-                <div key={attr.label} className={styles.attrCard}>
+                <div
+                  key={attr.label}
+                  className={styles.attrCard}
+                  data-testid={`pet-detail-attr-${attr.label.toLowerCase()}`}
+                >
                   <span className={styles.attrLabel}>{attr.label}</span>
                   <span className={styles.attrValue}>{attr.value}</span>
                 </div>
               ))}
             </div>
 
-            {/**
-             * Indicadores de saúde: vacinação e castração.
-             * HealthItem é um sub-componente definido abaixo neste arquivo.
-             */}
-            <div className={styles.healthInfo}>
-              <HealthItem label="Vacinado" ok={pet.vaccinated} />
-              <HealthItem label="Castrado" ok={pet.castrated} />
+            {/* Indicadores de saúde */}
+            <div data-testid="pet-detail-health" className={styles.healthInfo}>
+              <HealthItem label="Vacinado" ok={pet.vaccinated} testId="pet-detail-health-vaccinated" />
+              <HealthItem label="Castrado" ok={pet.castrated} testId="pet-detail-health-castrated" />
             </div>
 
-            {/* Descrição longa do pet */}
-            <div className={styles.descriptionBlock}>
-              <h2 className={styles.descTitle}>Sobre {pet.name}</h2>
-              <p className={styles.description}>{pet.description}</p>
+            {/* Descrição */}
+            <div data-testid="pet-detail-description-block" className={styles.descriptionBlock}>
+              <h2
+                data-testid="pet-detail-description-title"
+                className={styles.descTitle}
+              >
+                Sobre {pet.name}
+              </h2>
+              <p
+                data-testid="pet-detail-description"
+                className={styles.description}
+              >
+                {pet.description}
+              </p>
             </div>
 
             {/* Botão de adoção */}
-            <Button as="link" href="/cadastrar" size="lg" fullWidth>
+            <Button
+              as="link"
+              href="/cadastrar"
+              size="lg"
+              fullWidth
+              data-testid="pet-detail-btn-adopt"
+            >
               <Heart size={18} aria-hidden="true" />
               Quero adotar {pet.name}
             </Button>
@@ -193,20 +186,14 @@ export default function PetDetailPage() {
 }
 
 /**
- * HealthItem — sub-componente de indicador de saúde.
- *
- * Exibe um ícone verde com check (✓) ou vermelho com X (✗)
- * dependendo se o valor "ok" é true ou false.
- *
- * É um componente local (não exportado) pois só é usado nesta página.
- *
- * @param label — texto descritivo ("Vacinado" ou "Castrado")
- * @param ok    — true = sim, false = não
+ * HealthItem — indicador de vacinação/castração com ícone.
  */
-function HealthItem({ label, ok }: { label: string; ok: boolean }) {
+function HealthItem({ label, ok, testId }: { label: string; ok: boolean; testId: string }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.9rem' }}>
-      {/* Ícone circular verde (check) ou vermelho (X) */}
+    <div
+      data-testid={testId}
+      style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.9rem' }}
+    >
       <span
         style={{
           display: 'flex',
@@ -215,13 +202,12 @@ function HealthItem({ label, ok }: { label: string; ok: boolean }) {
           width: '22px',
           height: '22px',
           borderRadius: '50%',
-          backgroundColor: ok ? 'var(--color-accent)' : '#fee2e2', // verde ou vermelho claro
+          backgroundColor: ok ? 'var(--color-accent)' : '#fee2e2',
           color: ok ? '#ffffff' : '#ef4444',
           flexShrink: 0,
         }}
         aria-hidden="true"
       >
-        {/* Renderiza o ícone correto dependendo do valor ok */}
         {ok ? <Check size={13} /> : <X size={13} />}
       </span>
       <span style={{ color: 'var(--color-text-secondary)' }}>

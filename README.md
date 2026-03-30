@@ -123,6 +123,51 @@ npm run cy:run
 | Fonte headings | Nunito |
 | Fonte corpo | Inter |
 
+## Git Flow
+
+Este projeto segue o padrão Git Flow com as seguintes branches:
+
+| Branch | Descrição |
+|---|---|
+| `main` | Código estável de produção |
+| `develop` | Integração — base para novas branches |
+| `feature/xxxx` | Nova funcionalidade |
+| `fix/xxxx` | Correção de bug |
+
+### Regras
+
+- **Nunca** commitar diretamente em `main` ou `develop`
+- Toda branch deve ser criada **a partir da `develop`**
+- Após concluir, a branch é mesclada de volta na `develop`
+
+### Fluxo de trabalho
+
+```bash
+# Nova feature
+git switch develop
+git checkout -b feature/nome-da-feature
+# ... desenvolve e commita ...
+git switch develop
+git merge feature/nome-da-feature
+
+# Correção de bug
+git switch develop
+git checkout -b fix/nome-do-bug
+# ... corrige e commita ...
+git switch develop
+git merge fix/nome-do-bug
+```
+
+### Exemplos de nomes de branch
+
+```
+feature/home
+feature/paginacao
+feature/detalhe-pet
+fix/filtro-categoria
+fix/botao-voltar
+```
+
 ## Observações
 
 - Os dados são **mock** (sem banco de dados real)

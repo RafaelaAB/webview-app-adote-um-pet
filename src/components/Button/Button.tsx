@@ -39,29 +39,30 @@ type ButtonSize = 'sm' | 'md' | 'lg'
  * Props base compartilhadas entre as duas versões do botão (button e link).
  */
 interface BaseProps {
-  variant?: ButtonVariant   // estilo visual (padrão: 'primary')
-  size?: ButtonSize         // tamanho (padrão: 'md')
-  fullWidth?: boolean       // se true, ocupa toda a largura disponível
-  className?: string        // classes CSS adicionais opcionais
-  children: React.ReactNode // conteúdo interno (texto, ícones, etc.)
+  variant?: ButtonVariant
+  size?: ButtonSize
+  fullWidth?: boolean
+  className?: string
+  children: React.ReactNode
+  'data-testid'?: string // identificador para testes Cypress
 }
 
 /**
  * Props exclusivas da versão <button>.
  */
 interface ButtonProps extends BaseProps {
-  as?: 'button'                // omitir "as" ou usar 'button' → renderiza <button>
-  onClick?: () => void         // função executada ao clicar
-  type?: 'button' | 'submit' | 'reset' // tipo do botão HTML (padrão: 'button')
-  disabled?: boolean           // desativa o botão
+  as?: 'button'
+  onClick?: () => void
+  type?: 'button' | 'submit' | 'reset'
+  disabled?: boolean
 }
 
 /**
  * Props exclusivas da versão <Link>.
  */
 interface LinkProps extends BaseProps {
-  as: 'link'    // usar 'link' → renderiza <Link> do Next.js
-  href: string  // URL de destino (obrigatória quando as='link')
+  as: 'link'
+  href: string
 }
 
 // União dos dois tipos: o componente aceita qualquer um dos dois formatos
@@ -74,13 +75,18 @@ type Props = ButtonProps | LinkProps
  * depois decide qual elemento HTML renderizar (button ou Link).
  */
 export default function Button(props: Props) {
-  // Extrai as props comuns com valores padrão
-  const { variant = 'primary', size = 'md', fullWidth = false, className = '', children } = props
+  const {
+    variant = 'primary',
+    size = 'md',
+    fullWidth = false,
+    className = '',
+    children,
+    'data-testid': testId,
+  } = props
 
   /**
    * Constrói a lista de classes CSS.
    * filter(Boolean) remove strings vazias do array antes de juntar.
-   * Ex resultado: "btn primary lg fullWidth"
    */
   const classes = [
     styles.btn,
@@ -95,7 +101,7 @@ export default function Button(props: Props) {
   // Se "as" for 'link', renderiza um <Link> do Next.js para navegação
   if (props.as === 'link') {
     return (
-      <Link href={props.href} className={classes}>
+      <Link href={props.href} className={classes} data-testid={testId}>
         {children}
       </Link>
     )
@@ -104,10 +110,11 @@ export default function Button(props: Props) {
   // Caso padrão: renderiza um <button> HTML comum
   return (
     <button
-      type={props.type ?? 'button'} // ?? significa "se for null/undefined, usa 'button'"
+      type={props.type ?? 'button'}
       onClick={props.onClick}
       disabled={props.disabled}
       className={classes}
+      data-testid={testId}
     >
       {children}
     </button>
