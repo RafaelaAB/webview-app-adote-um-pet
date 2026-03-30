@@ -98,12 +98,55 @@ interface Pet {
 
 ## Testes
 
-Os testes E2E com Cypress cobrem:
+O projeto conta com dois tipos de testes: **unitários** (Jest) e **E2E** (Cypress).
 
-- Layout e navegação da home
-- Listagem e filtragem de pets por categoria
-- Navegação para detalhe do pet
-- Validação e envio do formulário de cadastro
+### Testes Unitários — Jest + React Testing Library
+
+Testam componentes, hooks, contexto e páginas de forma isolada, sem precisar rodar o servidor.
+
+**Cobertura mínima exigida: 90%** em statements, branches, funções e linhas. O build falha se não atingir esse threshold.
+
+| Script | Descrição |
+|---|---|
+| `npm test` | Roda todos os testes uma vez |
+| `npm run test:watch` | Modo interativo — re-roda ao salvar arquivos |
+| `npm run test:coverage` | Roda os testes e gera relatório de cobertura |
+
+Cobertura atual:
+
+| Categoria | Cobertura |
+|---|---|
+| Statements | ~99% |
+| Branches | ~93% |
+| Funções | ~97% |
+| Linhas | ~99% |
+
+Os testes ficam em `src/__tests__/` organizados por tipo:
+
+```
+src/__tests__/
+├── app/
+│   ├── HomePage.test.tsx
+│   ├── PetsPage.test.tsx
+│   ├── PetDetailPage.test.tsx
+│   └── CadastrarPage.test.tsx
+├── components/
+│   ├── Button.test.tsx
+│   ├── Header.test.tsx
+│   ├── Footer.test.tsx
+│   └── PetCard.test.tsx
+├── context/
+│   └── PetContext.test.tsx
+├── hooks/
+│   ├── usePets.test.tsx
+│   └── useScrollEffect.test.tsx
+└── data/
+    └── pets.test.ts
+```
+
+### Testes E2E — Cypress
+
+Testam fluxos completos no browser com o servidor rodando.
 
 ```bash
 # Certifique-se que o servidor está rodando
@@ -112,6 +155,13 @@ npm run dev
 # Em outro terminal, rode os testes
 npm run cy:run
 ```
+
+Os testes E2E cobrem:
+
+- Layout e navegação da home
+- Listagem e filtragem de pets por categoria
+- Navegação para detalhe do pet
+- Validação e envio do formulário de cadastro
 
 ## Sistema de Design
 

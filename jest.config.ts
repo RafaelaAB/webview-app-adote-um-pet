@@ -16,7 +16,8 @@ const config: Config = {
     'src/**/*.{ts,tsx}',
     '!src/**/*.d.ts',
     '!src/app/globals.css',
-    '!src/app/layout.tsx', // server component — não testável com jsdom
+    '!src/app/layout.tsx',  // server component — não testável com jsdom
+    '!src/types/index.ts',  // apenas definições de tipos TypeScript, sem código executável
   ],
   coverageThreshold: {
     global: {
