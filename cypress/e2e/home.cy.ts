@@ -14,7 +14,7 @@ describe('Página Inicial — Adote um Pet', () => {
 
   it('exibe a seção de pets com 4 cards', () => {
     cy.contains('Veja os pets que precisam de ajuda').should('be.visible')
-    cy.get('[data-testid="pets-grid"]', { timeout: 5000 })
+    cy.get('[data-testid="home-pets-grid"]', { timeout: 5000 })
       .find('[data-testid="pet-card"]')
       .should('have.length', 4)
   })
