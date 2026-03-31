@@ -1,0 +1,76 @@
+/* Loading state — Home page */
+
+.page {
+  min-height: calc(100dvh - var(--header-height));
+}
+
+/* Hero */
+.heroSection {
+  padding-block: var(--space-20);
+  background-color: var(--color-bg-section);
+}
+
+.heroInner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  max-width: 560px;
+}
+
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.textBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.ctaBlock {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  padding-top: var(--space-2);
+}
+
+/* Pets section */
+.petsSection {
+  padding-block: var(--space-16);
+}
+
+.sectionHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-bottom: var(--space-10);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-6);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-2);
+}
+
+@media (max-width: 1024px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .grid { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,62 @@
+/* Loading state — Pet Detail page */
+
+.page {
+  padding-block: var(--space-8) var(--space-20);
+  min-height: calc(100dvh - var(--header-height));
+}
+
+.backBtn {
+  margin-bottom: var(--space-8);
+}
+
+/* Duas colunas — espelha o .detail da página real */
+.detail {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-12);
+  align-items: start;
+}
+
+/* Coluna de informações */
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.badges {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.textBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.attributesGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+
+.attribute {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-section);
+}
+
+.healthRow {
+  display: flex;
+  gap: var(--space-3);
+}
+
+@media (max-width: 768px) {
+  .detail {
+    grid-template-columns: 1fr;
+  }
+}

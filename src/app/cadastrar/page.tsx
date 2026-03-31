@@ -10,7 +10,10 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ArrowLeft, CheckCircle } from 'lucide-react'
 import Button from '@/components/Button/Button'
+import { createLogger } from '@/lib/logger'
 import styles from './cadastrar.module.css'
+
+const log = createLogger('CadastrarPage')
 
 interface FormData {
   name: string
@@ -48,12 +51,9 @@ export default function CadastrarPage() {
     const newErrors: Partial<FormData> = {}
     if (!form.name.trim()) newErrors.name = 'Nome é obrigatório'
     if (!form.category) newErrors.category = 'Categoria é obrigatória'
-    if (!form.breed.trim()) newErrors.breed = 'Raça é obrigatória'
-    if (!form.age.trim()) newErrors.age = 'Idade é obrigatória'
     if (!form.gender) newErrors.gender = 'Sexo é obrigatório'
     if (!form.size) newErrors.size = 'Porte é obrigatório'
     if (!form.location.trim()) newErrors.location = 'Localização é obrigatória'
-    if (!form.description.trim()) newErrors.description = 'Descrição é obrigatória'
     if (!form.contactName.trim()) newErrors.contactName = 'Nome do responsável é obrigatório'
     if (!form.contactPhone.trim()) newErrors.contactPhone = 'Telefone é obrigatório'
     setErrors(newErrors)
@@ -178,7 +178,7 @@ export default function CadastrarPage() {
                 onChange={handleChange}
                 error={errors.breed}
                 placeholder="Ex: Labrador, Persa, SRD"
-                required
+                
               />
               <Field
                 label="Idade"
@@ -188,7 +188,7 @@ export default function CadastrarPage() {
                 onChange={handleChange}
                 error={errors.age}
                 placeholder="Ex: 2 anos, 6 meses"
-                required
+                
               />
             </div>
 
@@ -234,7 +234,7 @@ export default function CadastrarPage() {
             {/* Textarea de descrição */}
             <div className={styles.fieldGroup}>
               <label className={styles.label} htmlFor="description">
-                Descrição <span className={styles.required}>*</span>
+                Descrição <span ></span>
               </label>
               <textarea
                 id="description"
@@ -245,7 +245,6 @@ export default function CadastrarPage() {
                 placeholder="Conte um pouco sobre o pet: temperamento, hábitos, necessidades especiais..."
                 className={`${styles.textarea} ${errors.description ? styles.inputError : ''}`}
                 rows={4}
-                required
                 aria-describedby={errors.description ? 'description-error' : undefined}
               />
               {errors.description && (

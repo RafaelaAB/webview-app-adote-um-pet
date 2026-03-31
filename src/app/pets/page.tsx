@@ -12,7 +12,10 @@ import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react'
 import { usePets } from '@/hooks/usePets'
 import { PetCategory } from '@/types'
 import PetCard from '@/components/PetCard/PetCard'
+import { createLogger } from '@/lib/logger'
 import styles from './pets.module.css'
+
+const log = createLogger('PetsPage')
 
 const CATEGORIES: { label: string; value: PetCategory | 'Todos' }[] = [
   { label: '🐾 Todos', value: 'Todos' },
@@ -42,17 +45,22 @@ export default function PetsPage() {
   const paginatedPets = pets.slice(startIndex, endIndex)
 
   function handleCategoryChange(value: PetCategory | 'Todos') {
+    log.info('filtro de categoria alterado', { de: activeCategory, para: value })
     setActiveCategory(value)
     setCurrentPage(1)
   }
 
   function handlePerPageChange(e: React.ChangeEvent<HTMLSelectElement>) {
-    setPerPage(Number(e.target.value))
+    const novoValor = Number(e.target.value)
+    log.info('itens por página alterado', { de: perPage, para: novoValor })
+    setPerPage(novoValor)
     setCurrentPage(1)
   }
 
   function goToPage(page: number) {
-    setCurrentPage(Math.max(1, Math.min(page, totalPages)))
+    const paginaValida = Math.max(1, Math.min(page, totalPages))
+    log.debug('navegação de página', { de: currentPage, para: paginaValida, totalPages })
+    setCurrentPage(paginaValida)
   }
 
   function getPageNumbers(): (number | 0)[] {
