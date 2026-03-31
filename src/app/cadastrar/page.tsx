@@ -10,7 +10,10 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ArrowLeft, CheckCircle } from 'lucide-react'
 import Button from '@/components/Button/Button'
+import { createLogger } from '@/lib/logger'
 import styles from './cadastrar.module.css'
+
+const log = createLogger('CadastrarPage')
 
 interface FormData {
   name: string
@@ -56,8 +59,12 @@ export default function CadastrarPage() {
     if (!form.description.trim()) newErrors.description = 'Descrição é obrigatória'
     if (!form.contactName.trim()) newErrors.contactName = 'Nome do responsável é obrigatório'
     if (!form.contactPhone.trim()) newErrors.contactPhone = 'Telefone é obrigatório'
+    const hasErrors = Object.keys(newErrors).length > 0
+    if (hasErrors) {
+      log.warn('formulário inválido', { campos: Object.keys(newErrors) })
+    }
     setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
+    return !hasErrors
   }
 
   const handleChange = (
@@ -72,7 +79,9 @@ export default function CadastrarPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    log.info('tentativa de envio do formulário', { pet: form.name, categoria: form.category })
     if (validate()) {
+      log.info('pet cadastrado com sucesso', { nome: form.name, categoria: form.category, contato: form.contactName })
       setSubmitted(true)
     }
   }
