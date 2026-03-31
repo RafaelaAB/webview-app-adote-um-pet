@@ -51,20 +51,13 @@ export default function CadastrarPage() {
     const newErrors: Partial<FormData> = {}
     if (!form.name.trim()) newErrors.name = 'Nome é obrigatório'
     if (!form.category) newErrors.category = 'Categoria é obrigatória'
-    if (!form.breed.trim()) newErrors.breed = 'Raça é obrigatória'
-    if (!form.age.trim()) newErrors.age = 'Idade é obrigatória'
     if (!form.gender) newErrors.gender = 'Sexo é obrigatório'
     if (!form.size) newErrors.size = 'Porte é obrigatório'
     if (!form.location.trim()) newErrors.location = 'Localização é obrigatória'
-    if (!form.description.trim()) newErrors.description = 'Descrição é obrigatória'
     if (!form.contactName.trim()) newErrors.contactName = 'Nome do responsável é obrigatório'
     if (!form.contactPhone.trim()) newErrors.contactPhone = 'Telefone é obrigatório'
-    const hasErrors = Object.keys(newErrors).length > 0
-    if (hasErrors) {
-      log.warn('formulário inválido', { campos: Object.keys(newErrors) })
-    }
     setErrors(newErrors)
-    return !hasErrors
+    return Object.keys(newErrors).length === 0
   }
 
   const handleChange = (
@@ -79,9 +72,7 @@ export default function CadastrarPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    log.info('tentativa de envio do formulário', { pet: form.name, categoria: form.category })
     if (validate()) {
-      log.info('pet cadastrado com sucesso', { nome: form.name, categoria: form.category, contato: form.contactName })
       setSubmitted(true)
     }
   }
@@ -187,7 +178,7 @@ export default function CadastrarPage() {
                 onChange={handleChange}
                 error={errors.breed}
                 placeholder="Ex: Labrador, Persa, SRD"
-                required
+                
               />
               <Field
                 label="Idade"
@@ -197,7 +188,7 @@ export default function CadastrarPage() {
                 onChange={handleChange}
                 error={errors.age}
                 placeholder="Ex: 2 anos, 6 meses"
-                required
+                
               />
             </div>
 
@@ -243,7 +234,7 @@ export default function CadastrarPage() {
             {/* Textarea de descrição */}
             <div className={styles.fieldGroup}>
               <label className={styles.label} htmlFor="description">
-                Descrição <span className={styles.required}>*</span>
+                Descrição <span ></span>
               </label>
               <textarea
                 id="description"
@@ -254,7 +245,6 @@ export default function CadastrarPage() {
                 placeholder="Conte um pouco sobre o pet: temperamento, hábitos, necessidades especiais..."
                 className={`${styles.textarea} ${errors.description ? styles.inputError : ''}`}
                 rows={4}
-                required
                 aria-describedby={errors.description ? 'description-error' : undefined}
               />
               {errors.description && (
