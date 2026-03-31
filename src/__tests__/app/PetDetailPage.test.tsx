@@ -50,6 +50,11 @@ describe('PetDetailPage', () => {
     expect(screen.getByTestId('pet-detail-loading')).toBeInTheDocument()
   })
 
+  it('o skeleton de loading tem aria-busy="true"', () => {
+    renderPage()
+    expect(screen.getByTestId('pet-detail-loading')).toHaveAttribute('aria-busy', 'true')
+  })
+
   // ── Pet encontrado ────────────────────────────────────────────────────────
 
   it('exibe a página de detalhe após carregar', async () => {
@@ -156,6 +161,14 @@ describe('PetDetailPage', () => {
     act(() => { jest.advanceTimersByTime(500) })
     await waitFor(() => {
       expect(screen.getByTestId('pet-detail-btn-favorite')).toBeInTheDocument()
+    })
+  })
+
+  it('o botão de favoritar tem aria-label', async () => {
+    renderPage()
+    act(() => { jest.advanceTimersByTime(500) })
+    await waitFor(() => {
+      expect(screen.getByTestId('pet-detail-btn-favorite')).toHaveAttribute('aria-label')
     })
   })
 

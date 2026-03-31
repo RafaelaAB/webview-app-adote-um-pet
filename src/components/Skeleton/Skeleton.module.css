@@ -1,0 +1,36 @@
+/* ============================================================
+   SKELETON — placeholder animado com efeito shimmer
+   ============================================================ */
+
+.skeleton {
+  display: block;
+
+  /*
+   * Gradiente horizontal que simula um brilho deslizando da esquerda
+   * para a direita — técnica conhecida como "shimmer" ou "skeleton loading".
+   *
+   * background-size: 200% permite que o gradiente se mova além da largura
+   * do elemento, criando o efeito de luz passando.
+   */
+  background: linear-gradient(
+    90deg,
+    var(--color-border-light) 25%,
+    var(--color-border)       50%,
+    var(--color-border-light) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+
+  /* Garante que o skeleton não interfira no fluxo do layout pai */
+  flex-shrink: 0;
+}
+
+/*
+ * @keyframes shimmer
+ * Move o gradiente da direita para a esquerda continuamente.
+ * background-position: 200% → -200% faz o "brilho" atravessar o elemento.
+ */
+@keyframes shimmer {
+  0%   { background-position:  200% 0; }
+  100% { background-position: -200% 0; }
+}

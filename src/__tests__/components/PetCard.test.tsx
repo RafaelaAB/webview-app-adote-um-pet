@@ -3,13 +3,14 @@ import PetCard from '@/components/PetCard/PetCard'
 import { Pet } from '@/types'
 
 jest.mock('next/link', () => {
-  return function MockLink({ href, children, className, 'data-testid': testId }: {
+  return function MockLink({ href, children, className, 'data-testid': testId, 'aria-label': ariaLabel }: {
     href: string
     children: React.ReactNode
     className?: string
     'data-testid'?: string
+    'aria-label'?: string
   }) {
-    return <a href={href} className={className} data-testid={testId}>{children}</a>
+    return <a href={href} className={className} data-testid={testId} aria-label={ariaLabel}>{children}</a>
   }
 })
 
@@ -37,10 +38,22 @@ const mockPet: Pet = {
 }
 
 describe('PetCard', () => {
+  // ── Link e navegação ──────────────────────────────────────────────────────
+
   it('renderiza o card como link para /pets/1', () => {
     render(<PetCard pet={mockPet} />)
     expect(screen.getByTestId('pet-card')).toHaveAttribute('href', '/pets/1')
   })
+
+  it('o card tem aria-label descritivo para leitores de tela', () => {
+    render(<PetCard pet={mockPet} />)
+    const card = screen.getByTestId('pet-card')
+    expect(card).toHaveAttribute('aria-label', expect.stringContaining('Rex'))
+    expect(card).toHaveAttribute('aria-label', expect.stringContaining('Labrador Retriever'))
+    expect(card).toHaveAttribute('aria-label', expect.stringContaining('Disponível'))
+  })
+
+  // ── Conteúdo ──────────────────────────────────────────────────────────────
 
   it('exibe o nome do pet', () => {
     render(<PetCard pet={mockPet} />)
@@ -67,6 +80,15 @@ describe('PetCard', () => {
     expect(screen.getByTestId('pet-card-location-1')).toHaveTextContent('São Paulo, SP')
   })
 
+  // ── Imagem ────────────────────────────────────────────────────────────────
+
+  it('renderiza a imagem com alt descritivo', () => {
+    render(<PetCard pet={mockPet} />)
+    expect(screen.getByAltText('Foto de Rex')).toBeInTheDocument()
+  })
+
+  // ── Badges ────────────────────────────────────────────────────────────────
+
   it('exibe o badge de categoria com emoji de cachorro', () => {
     render(<PetCard pet={mockPet} />)
     const badge = screen.getByTestId('pet-card-category-1')
@@ -89,10 +111,7 @@ describe('PetCard', () => {
     expect(screen.getByTestId('pet-card-status-1')).toHaveClass('statusPending')
   })
 
-  it('renderiza a imagem com alt correto', () => {
-    render(<PetCard pet={mockPet} />)
-    expect(screen.getByAltText('Foto de Rex')).toBeInTheDocument()
-  })
+  // ── Categorias ────────────────────────────────────────────────────────────
 
   it('exibe emoji correto para gato', () => {
     render(<PetCard pet={{ ...mockPet, id: '2', category: 'Gato' }} />)

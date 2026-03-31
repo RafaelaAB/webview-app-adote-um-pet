@@ -12,6 +12,7 @@ import Image from 'next/image'
 import { ArrowLeft, MapPin, Check, X, Heart } from 'lucide-react'
 import { usePetContext } from '@/context/PetContext'
 import Button from '@/components/Button/Button'
+import Skeleton from '@/components/Skeleton/Skeleton'
 import { createLogger } from '@/lib/logger'
 import styles from './pet-detail.module.css'
 
@@ -28,13 +29,52 @@ export default function PetDetailPage() {
   log.info('página de detalhe acessada', { petId })
 
   if (loading) {
+    /*
+     * Skeleton inline: espelha o layout real de duas colunas da página.
+     * Exibido enquanto o PetContext ainda está carregando os dados dos pets.
+     */
     return (
-      <div className={styles.page}>
-        <div
-          data-testid="pet-detail-loading"
-          className={`container ${styles.skeleton}`}
-          aria-label="Carregando..."
-        />
+      <div className={styles.page} data-testid="pet-detail-loading" aria-busy="true">
+        <div className="container">
+          {/* Botão voltar */}
+          <Skeleton width={80} height={34} radius="md" className={styles.skeletonBackBtn} />
+
+          {/* Layout duas colunas: imagem | informações */}
+          <div className={styles.skeletonDetail}>
+
+            {/* Coluna esquerda: imagem */}
+            <Skeleton width="100%" height={480} radius="xl" />
+
+            {/* Coluna direita: informações */}
+            <div className={styles.skeletonInfo}>
+              <div className={styles.skeletonBadges}>
+                <Skeleton width={90}  height={28} radius="full" />
+                <Skeleton width={100} height={28} radius="full" />
+              </div>
+              <Skeleton width="55%" height={48} radius="md" />
+              <Skeleton width="40%" height={20} radius="sm" />
+              <div className={styles.skeletonText}>
+                <Skeleton width="100%" height={16} radius="sm" />
+                <Skeleton width="100%" height={16} radius="sm" />
+                <Skeleton width="75%"  height={16} radius="sm" />
+              </div>
+              <div className={styles.skeletonAttrs}>
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <div key={i} className={styles.skeletonAttr}>
+                    <Skeleton width="50%" height={14} radius="sm" />
+                    <Skeleton width="70%" height={20} radius="sm" />
+                  </div>
+                ))}
+              </div>
+              <div className={styles.skeletonHealth}>
+                <Skeleton width={120} height={32} radius="md" />
+                <Skeleton width={120} height={32} radius="md" />
+              </div>
+              <Skeleton width="100%" height={52} radius="full" />
+            </div>
+
+          </div>
+        </div>
       </div>
     )
   }

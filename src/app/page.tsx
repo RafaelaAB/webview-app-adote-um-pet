@@ -10,7 +10,6 @@
  *   4. About       — informações sobre a ONG com estatísticas
  */
 
-import Link from 'next/link'
 import { ArrowRight, PawPrint } from 'lucide-react'
 import { usePets } from '@/hooks/usePets'
 import PetCard from '@/components/PetCard/PetCard'
@@ -24,7 +23,7 @@ export default function HomePage() {
   return (
     <>
       {/* ── Seção 1: Hero ── */}
-      <section data-testid="home-hero" className={styles.hero}>
+      <section data-testid="home-hero" className={styles.hero} aria-labelledby="hero-title">
         <div className={`container ${styles.heroInner}`}>
 
           <div className={styles.heroContent}>
@@ -33,6 +32,7 @@ export default function HomePage() {
               Adoção responsável
             </span>
             <h1
+              id="hero-title"
               data-testid="home-hero-title"
               className={styles.heroTitle}
             >
@@ -86,10 +86,11 @@ export default function HomePage() {
       </section>
 
       {/* ── Seção 2: Grid de pets em destaque ── */}
-      <section data-testid="home-pets-section" className={`${styles.section} ${styles.petsSection}`}>
+      <section data-testid="home-pets-section" className={`${styles.section} ${styles.petsSection}`} aria-labelledby="pets-title">
         <div className="container">
           <div className={styles.sectionHeader}>
             <h2
+              id="pets-title"
               data-testid="home-pets-title"
               className={styles.sectionTitle}
             >
@@ -102,7 +103,13 @@ export default function HomePage() {
           </div>
 
           {loading ? (
-            <div data-testid="home-pets-loading" className={styles.loadingGrid}>
+            <div
+              data-testid="home-pets-loading"
+              className={styles.loadingGrid}
+              role="status"
+              aria-label="Carregando pets em destaque"
+              aria-live="polite"
+            >
               {Array.from({ length: 4 }).map((_, i) => (
                 <div key={i} className={styles.skeleton} aria-hidden="true" />
               ))}
@@ -131,11 +138,11 @@ export default function HomePage() {
       </section>
 
       {/* ── Seção 3: CTA para cadastrar pet ── */}
-      <section data-testid="home-cta-section" className={styles.ctaSection}>
+      <section data-testid="home-cta-section" className={styles.ctaSection} aria-labelledby="cta-title">
         <div className={`container ${styles.ctaInner}`}>
           <div className={styles.ctaContent}>
             <span className={styles.ctaEmoji} aria-hidden="true">🐾</span>
-            <h2 data-testid="home-cta-title" className={styles.ctaTitle}>
+            <h2 id="cta-title" data-testid="home-cta-title" className={styles.ctaTitle}>
               Encontrou algum pet que precisa de ajuda?
             </h2>
             <p data-testid="home-cta-text" className={styles.ctaText}>
@@ -156,10 +163,10 @@ export default function HomePage() {
       </section>
 
       {/* ── Seção 4: Sobre a ONG ── */}
-      <section data-testid="home-about-section" className={`${styles.section} ${styles.aboutSection}`}>
+      <section data-testid="home-about-section" className={`${styles.section} ${styles.aboutSection}`} aria-labelledby="about-title">
         <div className={`container ${styles.aboutInner}`}>
           <div className={styles.aboutText}>
-            <h2 data-testid="home-about-title" className={styles.sectionTitle}>
+            <h2 id="about-title" data-testid="home-about-title" className={styles.sectionTitle}>
               Quem somos nós
             </h2>
             <p>

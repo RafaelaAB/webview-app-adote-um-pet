@@ -68,6 +68,13 @@ describe('HomePage', () => {
     expect(screen.getByTestId('home-pets-loading')).toBeInTheDocument()
   })
 
+  it('o skeleton de loading tem role="status" e aria-live="polite"', () => {
+    renderHome()
+    const loading = screen.getByTestId('home-pets-loading')
+    expect(loading).toHaveAttribute('role', 'status')
+    expect(loading).toHaveAttribute('aria-live', 'polite')
+  })
+
   it('exibe 4 cards de pets em destaque após carregar', async () => {
     renderHome()
     act(() => { jest.advanceTimersByTime(500) })
@@ -120,5 +127,28 @@ describe('HomePage', () => {
   it('exibe o botão "Saiba mais sobre nós" apontando para /sobre', () => {
     renderHome()
     expect(screen.getByTestId('home-btn-about')).toHaveAttribute('href', '/sobre')
+  })
+
+  // ── Acessibilidade ────────────────────────────────────────────────────────
+
+  it('a seção hero tem aria-labelledby apontando para o título h1', () => {
+    renderHome()
+    const hero = screen.getByTestId('home-hero')
+    expect(hero).toHaveAttribute('aria-labelledby', 'hero-title')
+    expect(document.getElementById('hero-title')).toBeInTheDocument()
+  })
+
+  it('a seção sobre tem aria-labelledby apontando para o título h2', () => {
+    renderHome()
+    const about = screen.getByTestId('home-about-section')
+    expect(about).toHaveAttribute('aria-labelledby', 'about-title')
+    expect(document.getElementById('about-title')).toBeInTheDocument()
+  })
+
+  it('a seção CTA tem aria-labelledby apontando para o título h2', () => {
+    renderHome()
+    const cta = screen.getByTestId('home-cta-section')
+    expect(cta).toHaveAttribute('aria-labelledby', 'cta-title')
+    expect(document.getElementById('cta-title')).toBeInTheDocument()
   })
 })

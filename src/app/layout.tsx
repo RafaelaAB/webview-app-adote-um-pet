@@ -29,8 +29,10 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { PetProvider } from '@/context/PetContext'
+import { SidebarProvider } from '@/context/SidebarContext'
 import Header from '@/components/Header/Header'
 import Footer from '@/components/Footer/Footer'
+import Sidebar from '@/components/Sidebar/Sidebar'
 
 /**
  * metadata — configura as metatags HTML da aplicação (SEO e redes sociais).
@@ -64,14 +66,35 @@ export default function RootLayout({
   return (
     <html lang="pt-BR"> {/* define o idioma da página para acessibilidade */}
       <body>
+        {/*
+         * Skip navigation link — permite que usuários de teclado/leitores de tela
+         * pulem diretamente para o conteúdo principal, ignorando o menu (WCAG 2.4.1).
+         */}
+        <a href="#main-content" className="skip-link">
+          Pular para o conteúdo principal
+        </a>
+
         {/**
          * PetProvider envolve tudo: Header, conteúdo das páginas e Footer.
          * Isso significa que todos os componentes podem acessar os dados
          * dos pets via usePetContext() ou usePets().
          */}
         <PetProvider>
-          <Header />
-          <main>{children}</main> {/* aqui é renderizado o conteúdo de cada página */}
+          {/*
+           * SidebarProvider envolve Header e Sidebar para que ambos acessem
+           * o mesmo estado de abertura/fechamento via useSidebarContext().
+           * O Header usa toggle() e a Sidebar usa isOpen e close().
+           */}
+          <SidebarProvider>
+            <Sidebar />
+            <Header />
+          </SidebarProvider>
+          {/*
+           * id="main-content" é o alvo do skip link acima (WCAG 2.4.1).
+           * tabIndex={-1} permite que o foco seja movido programaticamente
+           * para o main sem torná-lo parte do fluxo natural de tabulação.
+           */}
+          <main id="main-content" tabIndex={-1}>{children}</main>
           <Footer />
         </PetProvider>
       </body>
