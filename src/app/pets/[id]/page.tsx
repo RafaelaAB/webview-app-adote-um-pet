@@ -12,7 +12,10 @@ import Image from 'next/image'
 import { ArrowLeft, MapPin, Check, X, Heart } from 'lucide-react'
 import { usePetContext } from '@/context/PetContext'
 import Button from '@/components/Button/Button'
+import { createLogger } from '@/lib/logger'
 import styles from './pet-detail.module.css'
+
+const log = createLogger('PetDetailPage')
 
 export default function PetDetailPage() {
   const params = useParams()
@@ -21,6 +24,8 @@ export default function PetDetailPage() {
 
   const petId = typeof params.id === 'string' ? params.id : params.id?.[0] ?? ''
   const pet = getPetById(petId)
+
+  log.info('página de detalhe acessada', { petId })
 
   if (loading) {
     return (
@@ -35,6 +40,7 @@ export default function PetDetailPage() {
   }
 
   if (!pet) {
+    log.warn('pet não encontrado na página de detalhe', { petId })
     return (
       <div className={styles.page}>
         <div data-testid="pet-detail-not-found" className={`container ${styles.notFound}`}>

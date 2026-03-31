@@ -30,6 +30,9 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 import { Pet, PetCategory, PetContextType } from '@/types'
 import { petsData } from '@/data/pets'
+import { createLogger } from '@/lib/logger'
+
+const log = createLogger('PetContext')
 
 /**
  * createContext cria um "contêiner" vazio para os dados.
@@ -68,12 +71,18 @@ export function PetProvider({ children }: { children: ReactNode }) {
    * caso o componente seja desmontado antes dos 500ms acabarem (evita memory leak).
    */
   useEffect(() => {
+    log.info('iniciando carregamento dos pets')
+
     const timer = setTimeout(() => {
-      setPets(petsData)   // preenche a lista com os dados mock
-      setLoading(false)   // indica que o carregamento terminou
+      setPets(petsData)
+      setLoading(false)
+      log.info('pets carregados com sucesso', { total: petsData.length })
     }, 500)
 
-    return () => clearTimeout(timer) // limpeza: cancela o timer se necessário
+    return () => {
+      clearTimeout(timer)
+      log.debug('timer de carregamento cancelado (componente desmontado)')
+    }
   }, [])
 
   /**
@@ -85,7 +94,11 @@ export function PetProvider({ children }: { children: ReactNode }) {
    * @returns o objeto Pet encontrado ou undefined
    */
   const getPetById = (id: string): Pet | undefined => {
-    return pets.find((pet) => pet.id === id)
+    const pet = pets.find((pet) => pet.id === id)
+    if (!pet) {
+      log.warn('pet não encontrado', { id })
+    }
+    return pet
   }
 
   /**
@@ -97,7 +110,9 @@ export function PetProvider({ children }: { children: ReactNode }) {
    */
   const filterPets = (category?: PetCategory): Pet[] => {
     if (!category) return pets
-    return pets.filter((pet) => pet.category === category)
+    const result = pets.filter((pet) => pet.category === category)
+    log.debug('filtro aplicado', { category, resultados: result.length })
+    return result
   }
 
   /**
@@ -124,7 +139,7 @@ export function PetProvider({ children }: { children: ReactNode }) {
 export function usePetContext(): PetContextType {
   const context = useContext(PetContext)
   if (!context) {
-    // Erro preventivo: garante que o contexto sempre seja usado corretamente
+    log.error('usePetContext usado fora do PetProvider')
     throw new Error('usePetContext deve ser usado dentro de PetProvider')
   }
   return context
