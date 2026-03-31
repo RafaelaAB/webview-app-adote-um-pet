@@ -196,23 +196,53 @@
   line-height: 1.75;
 }
 
-/* Loading skeleton */
-.skeleton {
-  height: 400px;
-  border-radius: var(--radius-xl);
-  background: linear-gradient(
-    90deg,
-    var(--color-border-light) 25%,
-    var(--color-border) 50%,
-    var(--color-border-light) 75%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
+/* Skeleton inline — layout de duas colunas espelhando o .detail real */
+.skeletonBackBtn {
+  margin-bottom: var(--space-8);
 }
 
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+.skeletonDetail {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-12);
+  align-items: start;
+}
+
+.skeletonInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.skeletonBadges {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.skeletonText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.skeletonAttrs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+
+.skeletonAttr {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-section);
+}
+
+.skeletonHealth {
+  display: flex;
+  gap: var(--space-3);
 }
 
 /* Not found */

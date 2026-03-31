@@ -1,0 +1,232 @@
+/* ============================================================
+   SIDEBAR — menu lateral deslizante
+   ============================================================ */
+
+/* ----------------------------------------------------------
+   OVERLAY
+   Fundo semitransparente que aparece atrás do menu quando aberto.
+   pointer-events: none garante que o overlay não interfira quando fechado.
+   ---------------------------------------------------------- */
+.overlay {
+  position: fixed;
+  inset: 0; /* cobre toda a tela (top/right/bottom/left = 0) */
+  background-color: rgba(0, 0, 0, 0);
+  z-index: 200;
+  pointer-events: none;
+  transition: background-color var(--transition-base);
+}
+
+.overlayVisible {
+  background-color: rgba(0, 0, 0, 0.45);
+  pointer-events: auto; /* permite capturar clique para fechar */
+}
+
+/* ----------------------------------------------------------
+   SIDEBAR (drawer)
+   Posicionada fora da tela à esquerda por padrão.
+   Ao abrir, translateX(0) a desliza para dentro — expandindo à direita.
+   ---------------------------------------------------------- */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100dvh; /* dynamic viewport height — funciona melhor em mobile */
+  width: 300px;
+  background-color: var(--color-white);
+  z-index: 300; /* acima do overlay */
+
+  /* Estado fechado: empurrada totalmente para fora do lado esquerdo */
+  transform: translateX(-100%);
+  transition: transform var(--transition-slow);
+
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+/* Estado aberto: posição natural (visível) */
+.sidebarOpen {
+  transform: translateX(0);
+}
+
+/* ----------------------------------------------------------
+   CABEÇALHO DA SIDEBAR
+   Altura alinhada com o Header para consistência visual.
+   ---------------------------------------------------------- */
+.sidebarHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-6);
+  height: var(--header-height);
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.sidebarTitle {
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: var(--color-secondary);
+}
+
+/* Botão de fechar (X) */
+.closeBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-full);
+  color: var(--color-text-secondary);
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.closeBtn:hover {
+  background-color: var(--color-primary-bg);
+  color: var(--color-primary);
+}
+
+/* ----------------------------------------------------------
+   LISTA DE NAVEGAÇÃO
+   ---------------------------------------------------------- */
+.navList {
+  padding: var(--space-4) var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  flex: 1;
+}
+
+.navItem {
+  /* wrapper para cada item — não tem estilos próprios */
+}
+
+/* ----------------------------------------------------------
+   LINK / BOTÃO DE NAVEGAÇÃO
+   Estilo compartilhado entre links simples e botões de grupo.
+   ---------------------------------------------------------- */
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-align: left;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.navLink:hover {
+  background-color: var(--color-primary-bg);
+  color: var(--color-primary);
+}
+
+/* Item ativo: rota atual */
+.navLink.active {
+  background-color: var(--color-primary-bg);
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+/* Modificador para botão de grupo (não altera aparência, apenas semântica) */
+.navLinkGroup {
+  /* herda tudo de .navLink */
+}
+
+/* Ícone do item de navegação */
+.navIcon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+/* Rótulo do item — ocupa espaço restante para empurrar o chevron à direita */
+.navLabel {
+  flex: 1;
+}
+
+/* ----------------------------------------------------------
+   CHEVRON (seta do grupo expansível)
+   ---------------------------------------------------------- */
+.chevron {
+  flex-shrink: 0;
+  transition: transform var(--transition-base);
+}
+
+/* Rotaciona 180° quando o grupo está expandido */
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+/* ----------------------------------------------------------
+   SUB-LISTA (itens filhos de um grupo)
+   Animada via max-height: 0 → max-height: valor fixo.
+   overflow: hidden esconde o conteúdo durante a animação.
+   ---------------------------------------------------------- */
+.subList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-left: var(--space-6);
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height var(--transition-base);
+}
+
+/* Estado expandido: max-height grande o suficiente para os itens */
+.subListOpen {
+  max-height: 200px;
+}
+
+/* Link dentro do sub-menu */
+.subLink {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+  font-weight: 400;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.subLink:hover {
+  background-color: var(--color-primary-bg);
+  color: var(--color-primary);
+}
+
+.subLink.active {
+  background-color: var(--color-primary-bg);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* Ícone do sub-item — levemente opaco para hierarquia visual */
+.subIcon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  opacity: 0.75;
+}
+
+/* ----------------------------------------------------------
+   RESPONSIVIDADE
+   Em telas menores a sidebar ocupa mais largura.
+   ---------------------------------------------------------- */
+@media (max-width: 360px) {
+  .sidebar {
+    width: 280px;
+  }
+}

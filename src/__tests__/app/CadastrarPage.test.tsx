@@ -150,6 +150,40 @@ describe('CadastrarPage', () => {
     })
   })
 
+  // ── Acessibilidade ────────────────────────────────────────────────────────
+
+  it('campos obrigatórios têm atributo required', () => {
+    expect(screen.getByTestId('register-input-name')).toBeRequired()
+    expect(screen.getByTestId('register-input-breed')).toBeRequired()
+    expect(screen.getByTestId('register-input-location')).toBeRequired()
+  })
+
+  it('campos com erro recebem aria-describedby apontando para a mensagem de erro', async () => {
+    fireEvent.click(screen.getByTestId('register-btn-submit'))
+    await waitFor(() => {
+      expect(screen.getByTestId('register-error-name')).toBeInTheDocument()
+    })
+    const nameInput = screen.getByTestId('register-input-name')
+    expect(nameInput).toHaveAttribute('aria-describedby', 'name-error')
+    const nameError = screen.getByTestId('register-error-name')
+    expect(nameError).toHaveAttribute('id', 'name-error')
+  })
+
+  it('mensagens de erro têm role="alert"', async () => {
+    fireEvent.click(screen.getByTestId('register-btn-submit'))
+    await waitFor(() => {
+      expect(screen.getByTestId('register-error-name')).toBeInTheDocument()
+    })
+    const alerts = screen.getAllByRole('alert')
+    expect(alerts.length).toBeGreaterThan(0)
+  })
+
+  it('labels estão associados aos campos via htmlFor', () => {
+    const nameInput = screen.getByTestId('register-input-name')
+    expect(nameInput).toHaveAttribute('id', 'name')
+    expect(screen.getByLabelText(/Nome do pet/i)).toBe(nameInput)
+  })
+
   it('"Cadastrar outro pet" reseta o formulário e volta ao formulário', async () => {
     await fillForm()
     fireEvent.click(screen.getByTestId('register-btn-submit'))

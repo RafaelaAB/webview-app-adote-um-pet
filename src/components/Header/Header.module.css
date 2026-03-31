@@ -10,7 +10,7 @@
     box-shadow var(--transition-base);
 }
 
-.header.scrolled {
+.scrolled {
   border-bottom-color: var(--color-border);
   box-shadow: var(--shadow-header);
 }
@@ -39,9 +39,8 @@
   opacity: 0.85;
 }
 
-.brandIcon {
-  font-size: 1.4rem;
-  line-height: 1;
+.brandLogo {
+  flex-shrink: 0;
 }
 
 .brandText {
@@ -62,7 +61,6 @@
     background-color var(--transition-fast),
     color var(--transition-fast);
 }
-
 .iconBtn:hover {
   background-color: var(--color-primary-bg);
   color: var(--color-primary);

@@ -34,6 +34,7 @@ export default function PetCard({ pet }: PetCardProps) {
       href={`/pets/${pet.id}`}
       className={styles.card}
       data-testid="pet-card"
+      aria-label={`${pet.name} — ${pet.breed}, ${pet.age}, ${pet.gender}. ${pet.status}. Ver detalhes`}
     >
       {/* Imagem do pet */}
       <div className={styles.imageWrapper}>
