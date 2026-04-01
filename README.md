@@ -152,8 +152,28 @@ Cobertura atual:
 
 ```bash
 npm run dev        # inicie o servidor
-npm run cy:run     # rode os testes em outro terminal
+npm run cy:open    # modo interativo (recomendado para desenvolvimento)
+npm run cy:run     # modo headless (CI/CD)
 ```
+
+Os testes estão organizados por página/funcionalidade em `cypress/e2e/`:
+
+| Arquivo | O que cobre |
+|---|---|
+| `home.cy.ts` | Header, hero, grid de pets em destaque, CTA, seção "Quem somos nós", footer |
+| `pets.cy.ts` | Listagem completa, filtros por categoria, paginação, itens por página, navegação para detalhe |
+| `pet-detail.cy.ts` | Dados do pet, botão de adoção, pet não encontrado, acesso via listagem |
+| `cadastro.cy.ts` | Estrutura do formulário, todos os erros de validação, fluxo de sucesso, "cadastrar outro pet", cancelar |
+| `sidebar.cy.ts` | Abrir/fechar (botão, overlay, Escape), todos os links, expansão do grupo Eventos |
+| `eventos.cy.ts` | Campanhas de adoção e vacinação (badge "Em Breve", links para /pets) |
+
+**Comandos customizados** (`cypress/support/commands.ts`):
+
+| Comando | Descrição |
+|---|---|
+| `cy.visitHome()` | Visita a página inicial |
+| `cy.openSidebar()` | Abre a sidebar e aguarda sua visibilidade |
+| `cy.fillPetForm(data)` | Preenche os campos do formulário de cadastro seletivamente |
 
 ## Acessibilidade (WCAG 2.1 AA)
 

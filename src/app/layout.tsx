@@ -33,6 +33,7 @@ import { SidebarProvider } from '@/context/SidebarContext'
 import Header from '@/components/Header/Header'
 import Footer from '@/components/Footer/Footer'
 import Sidebar from '@/components/Sidebar/Sidebar'
+import ScrollToTop from '@/components/ScrollToTop/ScrollToTop'
 
 /**
  * metadata — configura as metatags HTML da aplicação (SEO e redes sociais).
@@ -79,6 +80,7 @@ export default function RootLayout({
          * Isso significa que todos os componentes podem acessar os dados
          * dos pets via usePetContext() ou usePets().
          */}
+        <ScrollToTop />
         <PetProvider>
           {/*
            * SidebarProvider envolve Header e Sidebar para que ambos acessem

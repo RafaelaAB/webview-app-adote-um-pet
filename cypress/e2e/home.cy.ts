@@ -3,101 +3,112 @@ describe('Página Inicial — Adote um Pet', () => {
     cy.visit('/')
   })
 
-  it('exibe o header com o título "Adote um Pet"', () => {
-    cy.get('header').should('be.visible')
-    cy.get('header').contains('Adote um Pet').should('be.visible')
+  // ── Header ────────────────────────────────────────────────────────────────
+  describe('Header', () => {
+    it('exibe o header com o título "Adote um Pet"', () => {
+      cy.get('header').should('be.visible')
+      cy.get('[data-testid="header-brand"]').should('contain.text', 'Adote um Pet')
+    })
+
+    it('exibe os botões de menu, busca e perfil no header', () => {
+      cy.get('[data-testid="header-btn-menu"]').should('be.visible')
+      cy.get('[data-testid="header-btn-search"]').should('be.visible')
+      cy.get('[data-testid="header-btn-profile"]').should('be.visible')
+    })
+
+    it('abre a sidebar ao clicar no botão de menu', () => {
+      cy.get('[data-testid="header-btn-menu"]').click()
+      cy.get('[data-testid="sidebar"]').should('be.visible')
+    })
   })
 
-  it('exibe o título hero da página', () => {
-    cy.contains('Salve uma vida').should('be.visible')
+  // ── Hero ──────────────────────────────────────────────────────────────────
+  describe('Seção Hero', () => {
+    it('exibe o título hero da página', () => {
+      cy.get('[data-testid="home-hero-title"]').should('contain.text', 'Salve uma vida')
+    })
+
+    it('exibe o badge de adoção responsável', () => {
+      cy.get('[data-testid="home-hero-badge"]').should('be.visible')
+    })
+
+    it('navega para /pets ao clicar em "Adotar agora"', () => {
+      cy.get('[data-testid="home-btn-adopt"]').click()
+      cy.url().should('include', '/pets')
+    })
+
+    it('navega para /cadastrar ao clicar em "Cadastrar pet"', () => {
+      cy.visit('/')
+      cy.get('[data-testid="home-btn-register"]').click()
+      cy.url().should('include', '/cadastrar')
+    })
   })
 
-  it('exibe a seção de pets com 4 cards', () => {
-    cy.contains('Veja os pets que precisam de ajuda').should('be.visible')
-    cy.get('[data-testid="home-pets-grid"]', { timeout: 5000 })
-      .find('[data-testid="pet-card"]')
-      .should('have.length', 4)
+  // ── Grid de pets em destaque ───────────────────────────────────────────────
+  describe('Seção de Pets em Destaque', () => {
+    it('exibe o título da seção de pets', () => {
+      cy.get('[data-testid="home-pets-title"]').should('be.visible')
+    })
+
+    it('exibe exatamente 4 cards de pets', () => {
+      cy.get('[data-testid="home-pets-grid"]', { timeout: 6000 })
+        .find('[data-testid="pet-card"]')
+        .should('have.length', 4)
+    })
+
+    it('navega para /pets ao clicar em "Veja todos"', () => {
+      cy.get('[data-testid="home-btn-see-all"]').click()
+      cy.url().should('include', '/pets')
+    })
   })
 
-  it('exibe o botão "Veja todos" que leva à página de pets', () => {
-    cy.contains('Veja todos').should('be.visible')
-    cy.contains('Veja todos').click()
-    cy.url().should('include', '/pets')
+  // ── CTA ───────────────────────────────────────────────────────────────────
+  describe('Seção CTA', () => {
+    it('exibe a seção de chamada para cadastro', () => {
+      cy.get('[data-testid="home-cta-section"]').should('be.visible')
+    })
+
+    it('exibe o botão "Cadastre aqui"', () => {
+      cy.get('[data-testid="home-btn-cta-register"]').should('be.visible')
+    })
+
+    it('navega para /cadastrar ao clicar em "Cadastre aqui"', () => {
+      cy.get('[data-testid="home-btn-cta-register"]').click()
+      cy.url().should('include', '/cadastrar')
+    })
   })
 
-  it('exibe o botão de cadastro de pet', () => {
-    cy.contains('Cadastre aqui').should('be.visible')
+  // ── Quem somos nós ────────────────────────────────────────────────────────
+  describe('Seção Quem Somos Nós', () => {
+    it('exibe a seção com o título correto', () => {
+      cy.get('[data-testid="home-about-section"]').should('be.visible')
+      cy.get('[data-testid="home-about-title"]').should('contain.text', 'Quem somos nós')
+    })
+
+    it('exibe os cards de estatísticas', () => {
+      cy.get('[data-testid="home-about-stats"]').should('be.visible')
+    })
   })
 
-  it('redireciona para /cadastrar ao clicar em "Cadastre aqui"', () => {
-    cy.contains('Cadastre aqui').click()
-    cy.url().should('include', '/cadastrar')
-  })
+  // ── Footer ────────────────────────────────────────────────────────────────
+  describe('Footer', () => {
+    it('exibe o footer com o nome da desenvolvedora', () => {
+      cy.get('[data-testid="footer"]').should('be.visible')
+      cy.get('[data-testid="footer"]').should('contain.text', 'Rafaela Andrade Batista')
+    })
 
-  it('exibe a seção "Quem somos nós"', () => {
-    cy.contains('Quem somos nós').should('be.visible')
-  })
+    it('exibe o link do GitHub no footer', () => {
+      cy.get('[data-testid="footer-link-github"]')
+        .should('be.visible')
+        .and('have.attr', 'href')
+        .and('include', 'github.com')
+    })
 
-  it('exibe o footer com o nome da desenvolvedora', () => {
-    cy.get('footer').should('be.visible')
-    cy.get('footer').contains('Rafaela Andrade Batista').should('be.visible')
-  })
-
-  it('exibe links de GitHub e Instagram no footer', () => {
-    cy.get('footer').contains('GitHub').should('be.visible')
-    cy.get('footer').contains('Instagram').should('be.visible')
-  })
-})
-
-describe('Página de listagem de pets', () => {
-  beforeEach(() => {
-    cy.visit('/pets')
-  })
-
-  it('exibe todos os pets', () => {
-    cy.get('[data-testid="all-pets-grid"]', { timeout: 5000 })
-      .find('[data-testid="pet-card"]')
-      .should('have.length.greaterThan', 4)
-  })
-
-  it('filtra pets por categoria', () => {
-    cy.contains('Cachorros').click()
-    cy.get('[data-testid="pet-card"]').should('have.length.greaterThan', 0)
-  })
-
-  it('navega para o detalhe do pet ao clicar no card', () => {
-    cy.get('[data-testid="pet-card"]', { timeout: 5000 }).first().click()
-    cy.url().should('match', /\/pets\/\d+/)
-  })
-})
-
-describe('Página de cadastro de pet', () => {
-  beforeEach(() => {
-    cy.visit('/cadastrar')
-  })
-
-  it('exibe o formulário de cadastro', () => {
-    cy.contains('Cadastrar um pet').should('be.visible')
-    cy.get('form').should('be.visible')
-  })
-
-  it('exibe erros de validação ao submeter formulário vazio', () => {
-    cy.get('form').submit()
-    cy.contains('Nome é obrigatório').should('be.visible')
-  })
-
-  it('exibe mensagem de sucesso ao preencher e submeter formulário', () => {
-    cy.get('#name').type('Bolota')
-    cy.get('#category').select('Cachorro')
-    cy.get('#breed').type('Vira-lata')
-    cy.get('#age').type('1 ano')
-    cy.get('#gender').select('Macho')
-    cy.get('#size').select('Médio')
-    cy.get('#location').type('São Paulo, SP')
-    cy.get('#description').type('Um cachorrinho muito fofo e carente.')
-    cy.get('#contactName').type('Maria Silva')
-    cy.get('#contactPhone').type('(11) 99999-9999')
-    cy.get('form').submit()
-    cy.contains('Pet cadastrado com sucesso!').should('be.visible')
+    it('exibe o link do Instagram no footer', () => {
+      cy.get('[data-testid="footer-link-instagram"]')
+        .should('be.visible')
+        .and('have.attr', 'href')
+        .and('include', 'instagram.com')
+    })
   })
 })
