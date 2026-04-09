@@ -8,8 +8,11 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { ArrowLeft, CheckCircle } from 'lucide-react'
+import { CheckCircle } from 'lucide-react'
 import Button from '@/components/Button/Button'
+import BackButton from '@/components/BackButton/BackButton'
+import { Field, SelectField, TextareaField } from '@/components/FormField/FormField'
+import { ROUTES } from '@/lib/routes'
 import { createLogger } from '@/lib/logger'
 import styles from './cadastrar.module.css'
 
@@ -72,6 +75,7 @@ export default function CadastrarPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    log.info('formulário de cadastro enviado')
     if (validate()) {
       setSubmitted(true)
     }
@@ -90,7 +94,7 @@ export default function CadastrarPage() {
               breve entrará em contato com você.
             </p>
             <div className={styles.successActions}>
-              <Button as="link" href="/" data-testid="register-btn-back-home">
+              <Button as="link" href={ROUTES.HOME} data-testid="register-btn-back-home">
                 Voltar ao início
               </Button>
               <Button
@@ -111,16 +115,7 @@ export default function CadastrarPage() {
     <div data-testid="register-page" className={styles.page}>
       <div className="container">
 
-        {/* Botão Voltar */}
-        <button
-          data-testid="register-btn-back"
-          onClick={() => router.back()}
-          className={styles.backBtn}
-          aria-label="Voltar"
-        >
-          <ArrowLeft size={18} aria-hidden="true" />
-          Voltar
-        </button>
+        <BackButton data-testid="register-btn-back" />
 
         <div className={styles.header}>
           <h1 data-testid="register-title" className={styles.title}>
@@ -178,7 +173,6 @@ export default function CadastrarPage() {
                 onChange={handleChange}
                 error={errors.breed}
                 placeholder="Ex: Labrador, Persa, SRD"
-                
               />
               <Field
                 label="Idade"
@@ -188,7 +182,6 @@ export default function CadastrarPage() {
                 onChange={handleChange}
                 error={errors.age}
                 placeholder="Ex: 2 anos, 6 meses"
-                
               />
             </div>
 
@@ -231,33 +224,15 @@ export default function CadastrarPage() {
               required
             />
 
-            {/* Textarea de descrição */}
-            <div className={styles.fieldGroup}>
-              <label className={styles.label} htmlFor="description">
-                Descrição <span ></span>
-              </label>
-              <textarea
-                id="description"
-                name="description"
-                data-testid="register-input-description"
-                value={form.description}
-                onChange={handleChange}
-                placeholder="Conte um pouco sobre o pet: temperamento, hábitos, necessidades especiais..."
-                className={`${styles.textarea} ${errors.description ? styles.inputError : ''}`}
-                rows={4}
-                aria-describedby={errors.description ? 'description-error' : undefined}
-              />
-              {errors.description && (
-                <span
-                  data-testid="register-error-description"
-                  className={styles.errorMsg}
-                  id="description-error"
-                  role="alert"
-                >
-                  {errors.description}
-                </span>
-              )}
-            </div>
+            <TextareaField
+              label="Descrição"
+              name="description"
+              value={form.description}
+              onChange={handleChange}
+              error={errors.description}
+              placeholder="Conte um pouco sobre o pet: temperamento, hábitos, necessidades especiais..."
+              rows={4}
+            />
           </fieldset>
 
           {/* ── Seção 2: Informações de contato ── */}
@@ -304,98 +279,6 @@ export default function CadastrarPage() {
           </div>
         </form>
       </div>
-    </div>
-  )
-}
-
-/* ── Sub-componentes ── */
-
-interface FieldProps {
-  label: string
-  name: string
-  type: string
-  value: string
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  error?: string
-  placeholder?: string
-  required?: boolean
-}
-
-function Field({ label, name, type, value, onChange, error, placeholder, required }: FieldProps) {
-  return (
-    <div className={styles.fieldGroup}>
-      <label className={styles.label} htmlFor={name}>
-        {label} {required && <span className={styles.required}>*</span>}
-      </label>
-      <input
-        id={name}
-        name={name}
-        type={type}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        data-testid={`register-input-${name}`}
-        className={`${styles.input} ${error ? styles.inputError : ''}`}
-        required={required}
-        aria-describedby={error ? `${name}-error` : undefined}
-      />
-      {error && (
-        <span
-          data-testid={`register-error-${name}`}
-          className={styles.errorMsg}
-          id={`${name}-error`}
-          role="alert"
-        >
-          {error}
-        </span>
-      )}
-    </div>
-  )
-}
-
-interface SelectFieldProps {
-  label: string
-  name: string
-  value: string
-  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void
-  error?: string
-  required?: boolean
-  options: { value: string; label: string }[]
-}
-
-function SelectField({ label, name, value, onChange, error, required, options }: SelectFieldProps) {
-  return (
-    <div className={styles.fieldGroup}>
-      <label className={styles.label} htmlFor={name}>
-        {label} {required && <span className={styles.required}>*</span>}
-      </label>
-      <select
-        id={name}
-        name={name}
-        value={value}
-        onChange={onChange}
-        data-testid={`register-select-${name}`}
-        className={`${styles.input} ${styles.select} ${error ? styles.inputError : ''}`}
-        required={required}
-        aria-describedby={error ? `${name}-error` : undefined}
-      >
-        <option value="">Selecione...</option>
-        {options.map((opt) => (
-          <option key={opt.value} value={opt.value}>
-            {opt.label}
-          </option>
-        ))}
-      </select>
-      {error && (
-        <span
-          data-testid={`register-error-${name}`}
-          className={styles.errorMsg}
-          id={`${name}-error`}
-          role="alert"
-        >
-          {error}
-        </span>
-      )}
     </div>
   )
 }

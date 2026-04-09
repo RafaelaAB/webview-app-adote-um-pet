@@ -21,6 +21,20 @@ export type PetStatus = 'Disponível' | 'Adotado' | 'Pendente'
 // Porte físico do pet
 export type PetSize = 'Pequeno' | 'Médio' | 'Grande'
 
+/** Tipo do doador — ONG registrada ou tutor particular */
+export type DonorType = 'ong' | 'tutor'
+
+/** Contato responsável pelo pet */
+export interface PetContact {
+  type: DonorType
+  name: string         // nome da ONG ou do tutor
+  address: string      // endereço completo
+  city: string         // cidade, estado
+  phone: string        // telefone / WhatsApp
+  email?: string       // e-mail (opcional)
+  openingHours?: string // horário de atendimento (opcional)
+}
+
 /**
  * Interface Pet — define todos os campos que um pet deve ter.
  * Todos os objetos de pet no projeto seguem esse contrato.
@@ -39,6 +53,7 @@ export interface Pet {
   status: PetStatus
   vaccinated: boolean  // true = vacinado, false = não vacinado
   castrated: boolean   // true = castrado, false = não castrado
+  contact: PetContact  // responsável pelo pet
 }
 
 /**

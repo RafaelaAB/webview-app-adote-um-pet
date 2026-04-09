@@ -7,11 +7,12 @@
  */
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { usePets } from '@/hooks/usePets'
+import { usePagination } from '@/hooks/usePagination'
 import { PetCategory } from '@/types'
 import PetCard from '@/components/PetCard/PetCard'
+import BackButton from '@/components/BackButton/BackButton'
 import { createLogger } from '@/lib/logger'
 import styles from './pets.module.css'
 
@@ -29,73 +30,50 @@ const CATEGORIES: { label: string; value: PetCategory | 'Todos' }[] = [
 const PER_PAGE_OPTIONS = [10, 20, 50, 100]
 
 export default function PetsPage() {
-  const router = useRouter()
   const [activeCategory, setActiveCategory] = useState<PetCategory | 'Todos'>('Todos')
-  const [currentPage, setCurrentPage] = useState(1)
-  const [perPage, setPerPage] = useState(10)
 
   const { pets, loading } = usePets(
     activeCategory === 'Todos' ? undefined : activeCategory
   )
 
-  const totalPets = pets.length
-  const totalPages = Math.max(1, Math.ceil(totalPets / perPage))
-  const startIndex = (currentPage - 1) * perPage
-  const endIndex = Math.min(startIndex + perPage, totalPets)
-  const paginatedPets = pets.slice(startIndex, endIndex)
+  const {
+    currentPage,
+    perPage,
+    totalItems,
+    totalPages,
+    startIndex,
+    endIndex,
+    paginatedItems,
+    goToPage,
+    changePerPage,
+    resetPage,
+    getPageNumbers,
+  } = usePagination(pets)
+
+  const pageNumbers = getPageNumbers()
 
   function handleCategoryChange(value: PetCategory | 'Todos') {
     log.info('filtro de categoria alterado', { de: activeCategory, para: value })
     setActiveCategory(value)
-    setCurrentPage(1)
+    resetPage()
   }
 
   function handlePerPageChange(e: React.ChangeEvent<HTMLSelectElement>) {
     const novoValor = Number(e.target.value)
     log.info('itens por página alterado', { de: perPage, para: novoValor })
-    setPerPage(novoValor)
-    setCurrentPage(1)
+    changePerPage(novoValor)
   }
 
-  function goToPage(page: number) {
-    const paginaValida = Math.max(1, Math.min(page, totalPages))
-    log.debug('navegação de página', { de: currentPage, para: paginaValida, totalPages })
-    setCurrentPage(paginaValida)
+  function handlePageNav(page: number) {
+    log.debug('navegação de página', { de: currentPage, para: page, totalPages })
+    goToPage(page)
   }
-
-  function getPageNumbers(): (number | 0)[] {
-    if (totalPages <= 7) {
-      return Array.from({ length: totalPages }, (_, i) => i + 1)
-    }
-    const pages: (number | 0)[] = []
-    const showLeftEllipsis = currentPage > 4
-    const showRightEllipsis = currentPage < totalPages - 3
-    pages.push(1)
-    if (showLeftEllipsis) pages.push(0)
-    const start = showLeftEllipsis ? Math.max(2, currentPage - 1) : 2
-    const end = showRightEllipsis ? Math.min(totalPages - 1, currentPage + 1) : totalPages - 1
-    for (let i = start; i <= end; i++) pages.push(i)
-    if (showRightEllipsis) pages.push(0)
-    pages.push(totalPages)
-    return pages
-  }
-
-  const pageNumbers = getPageNumbers()
 
   return (
     <div data-testid="pets-page" className={styles.page}>
       <div className="container">
 
-        {/* Botão Voltar */}
-        <button
-          data-testid="pets-btn-back"
-          onClick={() => router.back()}
-          className={styles.backBtn}
-          aria-label="Voltar"
-        >
-          <ArrowLeft size={18} aria-hidden="true" />
-          Voltar
-        </button>
+        <BackButton data-testid="pets-btn-back" />
 
         {/* Cabeçalho da página */}
         <div className={styles.pageHeader}>
@@ -129,13 +107,13 @@ export default function PetsPage() {
         </div>
 
         {/* Barra de controles: contagem + seletor de itens por página */}
-        {!loading && totalPets > 0 && (
+        {!loading && totalItems > 0 && (
           <div data-testid="pets-controls" className={styles.controls}>
             <p data-testid="pets-results-count" className={styles.resultsCount}>
               Mostrando{' '}
               <strong>{startIndex + 1}–{endIndex}</strong>{' '}
-              de <strong>{totalPets}</strong>{' '}
-              {totalPets === 1 ? 'pet' : 'pets'}
+              de <strong>{totalItems}</strong>{' '}
+              {totalItems === 1 ? 'pet' : 'pets'}
             </p>
 
             <label className={styles.perPageLabel}>
@@ -162,9 +140,9 @@ export default function PetsPage() {
               <div key={i} className={styles.skeleton} aria-hidden="true" />
             ))}
           </div>
-        ) : paginatedPets.length > 0 ? (
+        ) : paginatedItems.length > 0 ? (
           <div data-testid="all-pets-grid" className={styles.grid}>
-            {paginatedPets.map((pet) => (
+            {paginatedItems.map((pet) => (
               <PetCard key={pet.id} pet={pet} />
             ))}
           </div>
@@ -181,7 +159,7 @@ export default function PetsPage() {
 
             <button
               data-testid="pets-btn-prev"
-              onClick={() => goToPage(currentPage - 1)}
+              onClick={() => handlePageNav(currentPage - 1)}
               disabled={currentPage === 1}
               className={styles.pageBtn}
               aria-label="Página anterior"
@@ -198,7 +176,7 @@ export default function PetsPage() {
                 <button
                   key={page}
                   data-testid={`pets-btn-page-${page}`}
-                  onClick={() => goToPage(page)}
+                  onClick={() => handlePageNav(page)}
                   className={`${styles.pageBtn} ${
                     currentPage === page ? styles.pageBtnActive : ''
                   }`}
@@ -212,7 +190,7 @@ export default function PetsPage() {
 
             <button
               data-testid="pets-btn-next"
-              onClick={() => goToPage(currentPage + 1)}
+              onClick={() => handlePageNav(currentPage + 1)}
               disabled={currentPage === totalPages}
               className={styles.pageBtn}
               aria-label="Próxima página"

@@ -1,44 +1,58 @@
 /**
- * LAYOUT RAIZ DA APLICAÇÃO (RootLayout)
+ * ROOT LAYOUT — documento HTML raiz da aplicação
+ * ────────────────────────────────────────────────────────────────────────────
  *
- * O que é o Layout no Next.js App Router?
+ * O que é este arquivo?
+ * ──────────────────────
+ * No Next.js com App Router (pasta /app), o layout.tsx na raiz define
+ * o documento HTML que envolve ABSOLUTAMENTE TODAS as páginas.
+ * Qualquer coisa colocada aqui aparecerá em /, /pets, /cadastrar, etc.
+ *
+ * Analogia com Angular
+ * ─────────────────────
+ * Angular usa index.html como documento raiz e o AppComponent como
+ * componente raiz. No Next.js, layout.tsx assume esses dois papéis:
+ *
+ *   index.html   (Angular) → <html> / <body> / metatags  (Next.js layout.tsx)
+ *   AppComponent (Angular) → <AppShell>                  (Next.js AppShell)
+ *
+ * Por que separamos layout.tsx e AppShell?
  * ─────────────────────────────────────────
- * No Next.js 13+, o arquivo layout.tsx define a estrutura HTML que envolve
- * TODAS as páginas da aplicação. É o equivalente a um "template global".
+ * layout.tsx é um Server Component (renderizado no servidor) — ideal para
+ * metadados SEO e a estrutura estática do documento HTML.
  *
- * Tudo que está aqui aparece em todas as rotas: /home, /pets, /cadastrar, etc.
- * Por isso Header e Footer ficam aqui — eles são fixos em todas as páginas.
+ * AppShell é um Client Component (usa 'use client') — necessário porque
+ * os Providers (PetProvider, SidebarProvider) usam useState internamente,
+ * que só funciona no navegador.
  *
- * O que é o Router no Next.js?
- * ──────────────────────────────
- * O Router do Next.js controla a navegação entre páginas sem recarregar o
- * browser (Single Page Application). Existem duas formas de usar:
+ * Regra: nunca coloque 'use client' em layout.tsx.
+ * Delegue a parte interativa para componentes filhos como o AppShell.
  *
- *   1. <Link href="/pets"> — componente para links clicáveis (navegação declarativa)
- *   2. useRouter() — hook para navegar programaticamente (ex: após submit de formulário)
- *      Exemplo: router.back() volta para a página anterior
- *               router.push('/pets') redireciona para /pets
+ * O que é metadata?
+ * ──────────────────
+ * O Next.js exporta o objeto `metadata` e usa seus valores para gerar
+ * automaticamente as metatags HTML no <head>:
  *
- * O que é o PetProvider aqui?
- * ─────────────────────────────
- * Ao envolver tudo com <PetProvider>, garantimos que qualquer componente
- * em qualquer página pode acessar os dados dos pets via usePetContext().
- * É como uma "fonte de verdade" global que existe durante toda a sessão.
+ *   title       → <title>…</title>
+ *   description → <meta name="description" content="…">
+ *   keywords    → <meta name="keywords" content="…">
+ *   openGraph   → <meta property="og:title" content="…"> etc.
+ *
+ * Essas tags são lidas pelo Google (SEO) e pelo WhatsApp/Twitter ao
+ * compartilhar links (Open Graph).
  */
 
 import type { Metadata } from 'next'
 import './globals.css'
-import { PetProvider } from '@/context/PetContext'
-import { SidebarProvider } from '@/context/SidebarContext'
-import Header from '@/components/Header/Header'
-import Footer from '@/components/Footer/Footer'
-import Sidebar from '@/components/Sidebar/Sidebar'
-import ScrollToTop from '@/components/ScrollToTop/ScrollToTop'
+import AppShell from '@/components/AppShell/AppShell'
 
 /**
- * metadata — configura as metatags HTML da aplicação (SEO e redes sociais).
- * O Next.js usa esse objeto para gerar automaticamente as tags <title>,
- * <meta name="description">, <meta property="og:*">, etc. no <head> do HTML.
+ * metadata — configurações de SEO e Open Graph da aplicação.
+ *
+ * Exportar este objeto de um layout.tsx ou page.tsx é a forma que
+ * o Next.js 13+ usa para gerar as metatags sem precisar de <Head>.
+ * O conteúdo é estático (não muda por rota) porque está no layout raiz.
+ * Cada page.tsx pode exportar seu próprio metadata para sobrescrever.
  */
 export const metadata: Metadata = {
   title: 'Adote um Pet — Salve uma vida e faça a sua feliz',
@@ -54,10 +68,11 @@ export const metadata: Metadata = {
 }
 
 /**
- * RootLayout — componente de layout global.
+ * RootLayout — componente de layout raiz (Server Component).
  *
- * @param children — o conteúdo da página atual (injetado automaticamente
- *                   pelo Next.js conforme a rota acessada)
+ * @param children — conteúdo da página atual, injetado automaticamente
+ *                   pelo Next.js de acordo com a rota acessada.
+ *                   Equivale ao <router-outlet> do Angular.
  */
 export default function RootLayout({
   children,
@@ -65,40 +80,25 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="pt-BR"> {/* define o idioma da página para acessibilidade */}
+    /*
+     * <html lang="pt-BR">
+     * Informa ao navegador e aos leitores de tela que o idioma da página
+     * é Português do Brasil. Obrigatório pelo critério WCAG 3.1.1.
+     */
+    <html lang="pt-BR">
       <body>
         {/*
-         * Skip navigation link — permite que usuários de teclado/leitores de tela
-         * pulem diretamente para o conteúdo principal, ignorando o menu (WCAG 2.4.1).
+         * AppShell — componente raiz visual (equivalente ao AppComponent Angular).
+         * Responsável por:
+         *   - Registrar os Providers (PetProvider, SidebarProvider)
+         *   - Renderizar Header, Sidebar, Footer e ScrollToTop
+         *   - Expor o skip link de acessibilidade
+         *   - Envolver as páginas em <main id="main-content">
+         *
+         * Separar AppShell de RootLayout mantém este arquivo como
+         * Server Component puro, sem nenhuma dependência de cliente.
          */}
-        <a href="#main-content" className="skip-link">
-          Pular para o conteúdo principal
-        </a>
-
-        {/**
-         * PetProvider envolve tudo: Header, conteúdo das páginas e Footer.
-         * Isso significa que todos os componentes podem acessar os dados
-         * dos pets via usePetContext() ou usePets().
-         */}
-        <ScrollToTop />
-        <PetProvider>
-          {/*
-           * SidebarProvider envolve Header e Sidebar para que ambos acessem
-           * o mesmo estado de abertura/fechamento via useSidebarContext().
-           * O Header usa toggle() e a Sidebar usa isOpen e close().
-           */}
-          <SidebarProvider>
-            <Sidebar />
-            <Header />
-          </SidebarProvider>
-          {/*
-           * id="main-content" é o alvo do skip link acima (WCAG 2.4.1).
-           * tabIndex={-1} permite que o foco seja movido programaticamente
-           * para o main sem torná-lo parte do fluxo natural de tabulação.
-           */}
-          <main id="main-content" tabIndex={-1}>{children}</main>
-          <Footer />
-        </PetProvider>
+        <AppShell>{children}</AppShell>
       </body>
     </html>
   )
