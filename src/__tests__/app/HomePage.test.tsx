@@ -34,8 +34,6 @@ describe('HomePage', () => {
     jest.useRealTimers()
   })
 
-  // ── Hero ──────────────────────────────────────────────────────────────────
-
   it('exibe o badge "Adoção responsável"', () => {
     renderHome()
     expect(screen.getByTestId('home-hero-badge')).toHaveTextContent('Adoção responsável')
@@ -55,8 +53,6 @@ describe('HomePage', () => {
     renderHome()
     expect(screen.getByTestId('home-btn-register')).toHaveAttribute('href', '/cadastrar')
   })
-
-  // ── Seção de pets ─────────────────────────────────────────────────────────
 
   it('exibe o título da seção de pets', () => {
     renderHome()
@@ -92,8 +88,6 @@ describe('HomePage', () => {
     })
   })
 
-  // ── Seção CTA ─────────────────────────────────────────────────────────────
-
   it('exibe o título da seção CTA', () => {
     renderHome()
     expect(screen.getByTestId('home-cta-title')).toHaveTextContent('Encontrou algum pet que precisa de ajuda?')
@@ -103,8 +97,6 @@ describe('HomePage', () => {
     renderHome()
     expect(screen.getByTestId('home-btn-cta-register')).toHaveAttribute('href', '/cadastrar')
   })
-
-  // ── Seção Sobre ───────────────────────────────────────────────────────────
 
   it('exibe o título "Quem somos nós"', () => {
     renderHome()
@@ -128,8 +120,6 @@ describe('HomePage', () => {
     renderHome()
     expect(screen.getByTestId('home-btn-about')).toHaveAttribute('href', '/sobre')
   })
-
-  // ── Acessibilidade ────────────────────────────────────────────────────────
 
   it('a seção hero tem aria-labelledby apontando para o título h1', () => {
     renderHome()

@@ -1,15 +1,5 @@
 'use client'
 
-/**
- * PÁGINA INICIAL (Home Page) — rota: /
- *
- * Está dividida em 4 seções:
- *   1. Hero        — chamada principal com título, texto e botões de ação
- *   2. Pet Listing — grid com os 4 primeiros pets disponíveis
- *   3. CTA         — seção convidando o usuário a cadastrar um pet
- *   4. About       — informações sobre a ONG com estatísticas
- */
-
 import { ArrowRight, PawPrint } from 'lucide-react'
 import { usePets } from '@/hooks/usePets'
 import PetCard from '@/components/PetCard/PetCard'
@@ -22,7 +12,7 @@ export default function HomePage() {
 
   return (
     <>
-      {/* ── Seção 1: Hero ── */}
+
       <section data-testid="home-hero" className={styles.hero} aria-labelledby="hero-title">
         <div className={`container ${styles.heroInner}`}>
 
@@ -69,7 +59,6 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Ilustração decorativa */}
           <div className={styles.heroIllustration} aria-hidden="true">
             <div className={styles.heroCard}>
               <span className={styles.heroEmoji}>🐶</span>
@@ -85,7 +74,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── Seção 2: Grid de pets em destaque ── */}
       <section data-testid="home-pets-section" className={`${styles.section} ${styles.petsSection}`} aria-labelledby="pets-title">
         <div className="container">
           <div className={styles.sectionHeader}>
@@ -137,7 +125,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── Seção 3: CTA para cadastrar pet ── */}
       <section data-testid="home-cta-section" className={styles.ctaSection} aria-labelledby="cta-title">
         <div className={`container ${styles.ctaInner}`}>
           <div className={styles.ctaContent}>
@@ -162,7 +149,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── Seção 4: Sobre a ONG ── */}
       <section data-testid="home-about-section" className={`${styles.section} ${styles.aboutSection}`} aria-labelledby="about-title">
         <div className={`container ${styles.aboutInner}`}>
           <div className={styles.aboutText}>

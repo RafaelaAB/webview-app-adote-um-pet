@@ -1,13 +1,5 @@
 'use client'
 
-/**
- * PÁGINA: Campanhas de Vacinação
- * Rota: /eventos/campanhas-vacinacao
- *
- * Exibe campanhas de vacinação gratuita para pets na cidade do usuário.
- * Página em construção — estrutura preparada para integração futura com API.
- */
-
 import Link from 'next/link'
 import { Syringe, ArrowLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -25,7 +17,6 @@ export default function CampanhasVacinacaoPage() {
     <div className={styles.page}>
       <div className={`container ${styles.inner}`}>
 
-        {/* Navegação de volta */}
         <button
           className={styles.backBtn}
           onClick={() => router.back()}
@@ -36,7 +27,6 @@ export default function CampanhasVacinacaoPage() {
           <span>Voltar</span>
         </button>
 
-        {/* Cabeçalho da página */}
         <header className={styles.header}>
           <span className={styles.iconWrapper} aria-hidden="true">
             <Syringe size={40} strokeWidth={1.5} />
@@ -47,7 +37,6 @@ export default function CampanhasVacinacaoPage() {
           </p>
         </header>
 
-        {/* Conteúdo em construção */}
         <div className={styles.comingSoon}>
           <p className={styles.comingSoonText}>
             Em breve você encontrará aqui os calendários e locais de vacinação gratuita para pets na sua cidade.

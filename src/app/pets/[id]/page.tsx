@@ -1,12 +1,5 @@
 'use client'
 
-/**
- * PÁGINA DE DETALHE DO PET — rota: /pets/[id]
- *
- * Exibe todas as informações de um pet específico.
- * O [id] entre colchetes é uma rota dinâmica do Next.js.
- */
-
 import { useParams, useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { ArrowLeft, MapPin, Check, X, Heart } from 'lucide-react'
@@ -29,23 +22,17 @@ export default function PetDetailPage() {
   log.info('página de detalhe acessada', { petId })
 
   if (loading) {
-    /*
-     * Skeleton inline: espelha o layout real de duas colunas da página.
-     * Exibido enquanto o PetContext ainda está carregando os dados dos pets.
-     */
+
     return (
       <div className={styles.page} data-testid="pet-detail-loading" aria-busy="true">
         <div className="container">
-          {/* Botão voltar */}
+
           <Skeleton width={80} height={34} radius="md" className={styles.skeletonBackBtn} />
 
-          {/* Layout duas colunas: imagem | informações */}
           <div className={styles.skeletonDetail}>
 
-            {/* Coluna esquerda: imagem */}
             <Skeleton width="100%" height={480} radius="xl" />
 
-            {/* Coluna direita: informações */}
             <div className={styles.skeletonInfo}>
               <div className={styles.skeletonBadges}>
                 <Skeleton width={90}  height={28} radius="full" />
@@ -99,7 +86,6 @@ export default function PetDetailPage() {
     <div data-testid="pet-detail-page" className={styles.page}>
       <div className="container">
 
-        {/* Botão Voltar */}
         <button
           data-testid="pet-detail-btn-back"
           onClick={() => router.back()}
@@ -112,7 +98,6 @@ export default function PetDetailPage() {
 
         <div className={styles.detail}>
 
-          {/* Imagem com badge de status */}
           <div className={styles.imageWrapper}>
             <Image
               src={pet.image}
@@ -131,7 +116,6 @@ export default function PetDetailPage() {
             </span>
           </div>
 
-          {/* Painel de informações */}
           <div className={styles.info}>
 
             <div className={styles.infoTop}>
@@ -164,7 +148,6 @@ export default function PetDetailPage() {
               </button>
             </div>
 
-            {/* Localização */}
             <div
               data-testid="pet-detail-location"
               className={styles.location}
@@ -173,7 +156,6 @@ export default function PetDetailPage() {
               {pet.location}
             </div>
 
-            {/* Atributos: Idade, Sexo, Porte */}
             <div data-testid="pet-detail-attributes" className={styles.attributes}>
               {[
                 { label: 'Idade', value: pet.age },
@@ -191,13 +173,11 @@ export default function PetDetailPage() {
               ))}
             </div>
 
-            {/* Indicadores de saúde */}
             <div data-testid="pet-detail-health" className={styles.healthInfo}>
               <HealthItem label="Vacinado" ok={pet.vaccinated} testId="pet-detail-health-vaccinated" />
               <HealthItem label="Castrado" ok={pet.castrated} testId="pet-detail-health-castrated" />
             </div>
 
-            {/* Descrição */}
             <div data-testid="pet-detail-description-block" className={styles.descriptionBlock}>
               <h2
                 data-testid="pet-detail-description-title"
@@ -213,10 +193,9 @@ export default function PetDetailPage() {
               </p>
             </div>
 
-            {/* Botão de adoção */}
             <Button
               as="link"
-              href="/cadastrar"
+              href={`/adotar/${pet.id}`}
               size="lg"
               fullWidth
               data-testid="pet-detail-btn-adopt"
@@ -231,9 +210,6 @@ export default function PetDetailPage() {
   )
 }
 
-/**
- * HealthItem — indicador de vacinação/castração com ícone.
- */
 function HealthItem({ label, ok, testId }: { label: string; ok: boolean; testId: string }) {
   return (
     <div

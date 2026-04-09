@@ -16,7 +16,6 @@ jest.mock('next/link', () => {
   }
 })
 
-/** Preenche todos os campos do formulário com dados válidos */
 async function fillForm() {
   await userEvent.type(screen.getByTestId('register-input-name'), 'Bolota')
   await userEvent.selectOptions(screen.getByTestId('register-select-category'), 'Cachorro')
@@ -35,8 +34,6 @@ describe('CadastrarPage', () => {
     mockBack.mockClear()
     render(<CadastrarPage />)
   })
-
-  // ── Estrutura ─────────────────────────────────────────────────────────────
 
   it('exibe o título "Cadastrar um pet"', () => {
     expect(screen.getByTestId('register-title')).toHaveTextContent('Cadastrar um pet')
@@ -64,8 +61,6 @@ describe('CadastrarPage', () => {
     expect(mockBack).toHaveBeenCalledTimes(1)
   })
 
-  // ── Campos do formulário ──────────────────────────────────────────────────
-
   it('renderiza todos os campos de texto', () => {
     expect(screen.getByTestId('register-input-name')).toBeInTheDocument()
     expect(screen.getByTestId('register-input-breed')).toBeInTheDocument()
@@ -90,8 +85,6 @@ describe('CadastrarPage', () => {
     expect(select).toContainElement(screen.getByRole('option', { name: 'Coelho' }))
     expect(select).toContainElement(screen.getByRole('option', { name: 'Outro' }))
   })
-
-  // ── Validação ─────────────────────────────────────────────────────────────
 
   it('exibe erros ao submeter formulário vazio', async () => {
     fireEvent.click(screen.getByTestId('register-btn-submit'))
@@ -131,8 +124,6 @@ describe('CadastrarPage', () => {
     })
   })
 
-  // ── Envio com sucesso ─────────────────────────────────────────────────────
-
   it('exibe tela de sucesso ao preencher e submeter corretamente', async () => {
     await fillForm()
     fireEvent.click(screen.getByTestId('register-btn-submit'))
@@ -149,8 +140,6 @@ describe('CadastrarPage', () => {
       expect(screen.getByTestId('register-btn-back-home')).toHaveAttribute('href', '/')
     })
   })
-
-  // ── Acessibilidade ────────────────────────────────────────────────────────
 
   it('campos obrigatórios têm atributo required', () => {
     expect(screen.getByTestId('register-input-name')).toBeRequired()

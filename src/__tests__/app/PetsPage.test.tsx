@@ -40,8 +40,6 @@ describe('PetsPage', () => {
     jest.useRealTimers()
   })
 
-  // ── Estrutura ─────────────────────────────────────────────────────────────
-
   it('exibe o título "Todos os pets"', () => {
     renderPage()
     expect(screen.getByTestId('pets-title')).toHaveTextContent('Todos os pets')
@@ -63,8 +61,6 @@ describe('PetsPage', () => {
     expect(mockBack).toHaveBeenCalledTimes(1)
   })
 
-  // ── Loading ───────────────────────────────────────────────────────────────
-
   it('exibe skeleton de loading antes dos dados chegarem', () => {
     renderPage()
     expect(screen.getByTestId('pets-loading')).toBeInTheDocument()
@@ -74,8 +70,6 @@ describe('PetsPage', () => {
     renderPage()
     expect(screen.queryByTestId('pets-controls')).not.toBeInTheDocument()
   })
-
-  // ── Grid e contagem ───────────────────────────────────────────────────────
 
   it('exibe o grid com até 10 cards após carregar (padrão)', async () => {
     renderPage()
@@ -94,8 +88,6 @@ describe('PetsPage', () => {
     })
     expect(screen.getByTestId('pets-results-count')).toHaveTextContent('1–10')
   })
-
-  // ── Filtros ───────────────────────────────────────────────────────────────
 
   it('renderiza todos os botões de filtro', () => {
     renderPage()
@@ -121,7 +113,6 @@ describe('PetsPage', () => {
     await waitFor(() => {
       const dogs = petsData.filter((p) => p.category === 'Cachorro')
       const cards = screen.getAllByTestId('pet-card')
-      // pode ter menos de 10, mostra todos os cachorros se < 10 ou 10 se > 10
       expect(cards.length).toBeLessThanOrEqual(10)
       expect(cards.length).toBeGreaterThan(0)
     })
@@ -133,14 +124,10 @@ describe('PetsPage', () => {
     act(() => { jest.advanceTimersByTime(500) })
     await waitFor(() => { expect(screen.getByTestId('pets-pagination')).toBeInTheDocument() })
 
-    // vai para página 2
     fireEvent.click(screen.getByTestId('pets-btn-page-2'))
-    // troca filtro — deve voltar para pág 1
     fireEvent.click(screen.getByTestId('pets-filter-todos'))
     expect(screen.getByTestId('pets-btn-page-1')).toHaveAttribute('aria-current', 'page')
   })
-
-  // ── Paginação ─────────────────────────────────────────────────────────────
 
   it('exibe a navegação de paginação', async () => {
     renderPage()
@@ -181,13 +168,10 @@ describe('PetsPage', () => {
     act(() => { jest.advanceTimersByTime(500) })
     await waitFor(() => { expect(screen.getByTestId('pets-pagination')).toBeInTheDocument() })
 
-    // vai para a última página
     const lastPage = Math.ceil(petsData.length / 10)
     fireEvent.click(screen.getByTestId(`pets-btn-page-${lastPage}`))
     expect(screen.getByTestId('pets-btn-next')).toBeDisabled()
   })
-
-  // ── Seletor de itens por página ───────────────────────────────────────────
 
   it('exibe o seletor de itens por página', async () => {
     renderPage()

@@ -43,8 +43,6 @@ describe('PetDetailPage', () => {
     jest.useRealTimers()
   })
 
-  // ── Loading ───────────────────────────────────────────────────────────────
-
   it('exibe o skeleton de loading antes dos dados chegarem', () => {
     renderPage()
     expect(screen.getByTestId('pet-detail-loading')).toBeInTheDocument()
@@ -54,8 +52,6 @@ describe('PetDetailPage', () => {
     renderPage()
     expect(screen.getByTestId('pet-detail-loading')).toHaveAttribute('aria-busy', 'true')
   })
-
-  // ── Pet encontrado ────────────────────────────────────────────────────────
 
   it('exibe a página de detalhe após carregar', async () => {
     renderPage()
@@ -132,7 +128,7 @@ describe('PetDetailPage', () => {
   })
 
   it('exibe "Não" para pet não vacinado', async () => {
-    mockParams.id = '6' // Pingo — vaccinated: false
+    mockParams.id = '6'
     renderPage()
     act(() => { jest.advanceTimersByTime(500) })
     await waitFor(() => {
@@ -190,8 +186,6 @@ describe('PetDetailPage', () => {
     })
   })
 
-  // ── Pet não encontrado ────────────────────────────────────────────────────
-
   it('exibe "Pet não encontrado" para id inválido', async () => {
     mockParams.id = '999'
     renderPage()
@@ -210,8 +204,6 @@ describe('PetDetailPage', () => {
       expect(screen.getByTestId('pet-detail-btn-back-to-list')).toHaveAttribute('href', '/pets')
     })
   })
-
-  // ── params como array ─────────────────────────────────────────────────────
 
   it('aceita params.id como array de strings', async () => {
     mockParams.id = ['1']

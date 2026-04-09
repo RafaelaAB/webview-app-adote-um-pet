@@ -1,13 +1,5 @@
 'use client'
 
-/**
- * PÁGINA: Campanhas de Adoção
- * Rota: /eventos/campanhas-adocao
- *
- * Exibe campanhas de adoção de pets disponíveis na cidade do usuário.
- * Página em construção — estrutura preparada para integração futura com API.
- */
-
 import Link from 'next/link'
 import { MapPin, ArrowLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -25,7 +17,6 @@ export default function CampanhasAdocaoPage() {
     <div className={styles.page}>
       <div className={`container ${styles.inner}`}>
 
-        {/* Navegação de volta */}
         <button
           className={styles.backBtn}
           onClick={() => router.back()}
@@ -36,7 +27,6 @@ export default function CampanhasAdocaoPage() {
           <span>Voltar</span>
         </button>
 
-        {/* Cabeçalho da página */}
         <header className={styles.header}>
           <span className={styles.iconWrapper} aria-hidden="true">
             <MapPin size={40} strokeWidth={1.5} />
@@ -47,7 +37,6 @@ export default function CampanhasAdocaoPage() {
           </p>
         </header>
 
-        {/* Conteúdo em construção */}
         <div className={styles.comingSoon}>
           <p className={styles.comingSoonText}>
             Em breve você encontrará aqui os eventos e campanhas de adoção perto de você.

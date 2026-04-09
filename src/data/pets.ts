@@ -1,11 +1,3 @@
-/**
- * DADOS MOCK DOS PETS
- *
- * Lista expandida com 28 pets para tornar a paginação visível e funcional.
- * Imagens via loremflickr.com — busca fotos reais do Flickr por palavra-chave.
- * O parâmetro ?lock=N garante sempre a mesma foto para o mesmo número.
- */
-
 import { Pet } from '@/types'
 
 export const petsData: Pet[] = [
@@ -24,6 +16,15 @@ export const petsData: Pet[] = [
     status: 'Disponível',
     vaccinated: true,
     castrated: true,
+    contact: {
+      type: 'ong',
+      name: 'Patinhas do Bem',
+      address: 'Rua das Flores, 120 — Jardim Paulista',
+      city: 'São Paulo, SP',
+      phone: '(11) 98765-4321',
+      email: 'contato@patinhasbem.org.br',
+      openingHours: 'Seg–Sex: 9h–17h · Sáb: 9h–13h',
+    },
   },
   {
     id: '2',
@@ -40,6 +41,14 @@ export const petsData: Pet[] = [
     status: 'Disponível',
     vaccinated: true,
     castrated: true,
+    contact: {
+      type: 'tutor',
+      name: 'Carla Mendes',
+      address: 'Rua Ipanema, 45 — Botafogo',
+      city: 'Rio de Janeiro, RJ',
+      phone: '(21) 99876-5432',
+      email: 'carla.mendes@email.com',
+    },
   },
   {
     id: '3',
@@ -56,6 +65,15 @@ export const petsData: Pet[] = [
     status: 'Disponível',
     vaccinated: true,
     castrated: false,
+    contact: {
+      type: 'ong',
+      name: 'Refúgio Animal',
+      address: 'Estrada do Campo, km 5 — Zona Rural',
+      city: 'Belo Horizonte, MG',
+      phone: '(31) 96543-2109',
+      email: 'refugio@refugioanimal.org.br',
+      openingHours: 'Seg–Dom: 8h–18h',
+    },
   },
   {
     id: '4',
@@ -72,6 +90,15 @@ export const petsData: Pet[] = [
     status: 'Disponível',
     vaccinated: true,
     castrated: true,
+    contact: {
+      type: 'ong',
+      name: 'SOS Pets',
+      address: 'Rua Esperança, 88 — Vila Nova',
+      city: 'Curitiba, PR',
+      phone: '(41) 95432-1098',
+      email: 'sos@sospets.org.br',
+      openingHours: 'Seg–Sex: 10h–18h',
+    },
   },
   {
     id: '5',
@@ -88,6 +115,15 @@ export const petsData: Pet[] = [
     status: 'Disponível',
     vaccinated: true,
     castrated: false,
+    contact: {
+      type: 'ong',
+      name: 'Viva Bicho',
+      address: 'Praça da Liberdade, 10 — Boa Vista',
+      city: 'Porto Alegre, RS',
+      phone: '(51) 94321-0987',
+      email: 'contato@vivabicho.org',
+      openingHours: 'Ter–Sáb: 9h–17h',
+    },
   },
   {
     id: '6',
@@ -104,6 +140,13 @@ export const petsData: Pet[] = [
     status: 'Disponível',
     vaccinated: false,
     castrated: false,
+    contact: {
+      type: 'tutor',
+      name: 'Roberto Lima',
+      address: 'SHCS EQS 314/315 — Asa Sul',
+      city: 'Brasília, DF',
+      phone: '(61) 98888-7777',
+    },
   },
   {
     id: '7',
@@ -120,6 +163,15 @@ export const petsData: Pet[] = [
     status: 'Disponível',
     vaccinated: true,
     castrated: true,
+    contact: {
+      type: 'ong',
+      name: 'Amor Animal',
+      address: 'Rua da Comunidade, 33 — Bairro Novo',
+      city: 'Salvador, BA',
+      phone: '(71) 93210-9876',
+      email: 'amor@amoranimal.org.br',
+      openingHours: 'Seg–Sex: 8h–17h · Sáb: 8h–12h',
+    },
   },
   {
     id: '8',
@@ -136,6 +188,14 @@ export const petsData: Pet[] = [
     status: 'Disponível',
     vaccinated: false,
     castrated: false,
+    contact: {
+      type: 'tutor',
+      name: 'Ana Beatriz Costa',
+      address: 'Av. Beira Mar, 200 — Meireles',
+      city: 'Fortaleza, CE',
+      phone: '(85) 97777-6666',
+      email: 'anabeatriz@email.com',
+    },
   },
   {
     id: '9',
@@ -152,6 +212,15 @@ export const petsData: Pet[] = [
     status: 'Disponível',
     vaccinated: true,
     castrated: true,
+    contact: {
+      type: 'ong',
+      name: 'Patinhas do Bem',
+      address: 'Rua das Flores, 120 — Jardim Paulista',
+      city: 'São Paulo, SP',
+      phone: '(11) 98765-4321',
+      email: 'contato@patinhasbem.org.br',
+      openingHours: 'Seg–Sex: 9h–17h · Sáb: 9h–13h',
+    },
   },
   {
     id: '10',
@@ -168,6 +237,14 @@ export const petsData: Pet[] = [
     status: 'Disponível',
     vaccinated: true,
     castrated: true,
+    contact: {
+      type: 'tutor',
+      name: 'Fernanda Oliveira',
+      address: 'Rua Oscar Freire, 800 — Jardins',
+      city: 'São Paulo, SP',
+      phone: '(11) 96666-5555',
+      email: 'fernanda.oli@email.com',
+    },
   },
   {
     id: '11',
@@ -184,6 +261,15 @@ export const petsData: Pet[] = [
     status: 'Disponível',
     vaccinated: true,
     castrated: false,
+    contact: {
+      type: 'ong',
+      name: 'Amigos de Quatro Patas',
+      address: 'Av. Central, 450 — Centro',
+      city: 'Rio de Janeiro, RJ',
+      phone: '(21) 97654-3210',
+      email: 'ong@quatropatas.org',
+      openingHours: 'Seg–Sex: 9h–18h',
+    },
   },
   {
     id: '12',
@@ -200,6 +286,13 @@ export const petsData: Pet[] = [
     status: 'Disponível',
     vaccinated: true,
     castrated: true,
+    contact: {
+      type: 'tutor',
+      name: 'Marcos Pereira',
+      address: 'Rua Felipe Schmidt, 301 — Centro',
+      city: 'Florianópolis, SC',
+      phone: '(48) 95555-4444',
+    },
   },
   {
     id: '13',
@@ -216,6 +309,14 @@ export const petsData: Pet[] = [
     status: 'Disponível',
     vaccinated: true,
     castrated: true,
+    contact: {
+      type: 'tutor',
+      name: 'Juliana Ramos',
+      address: 'Av. Boa Viagem, 1500 — Boa Viagem',
+      city: 'Recife, PE',
+      phone: '(81) 94444-3333',
+      email: 'ju.ramos@email.com',
+    },
   },
   {
     id: '14',
@@ -232,6 +333,15 @@ export const petsData: Pet[] = [
     status: 'Disponível',
     vaccinated: true,
     castrated: true,
+    contact: {
+      type: 'ong',
+      name: 'SOS Pets',
+      address: 'Rua Esperança, 88 — Vila Nova',
+      city: 'Curitiba, PR',
+      phone: '(41) 95432-1098',
+      email: 'sos@sospets.org.br',
+      openingHours: 'Seg–Sex: 10h–18h',
+    },
   },
   {
     id: '15',
@@ -248,6 +358,13 @@ export const petsData: Pet[] = [
     status: 'Disponível',
     vaccinated: true,
     castrated: false,
+    contact: {
+      type: 'tutor',
+      name: 'Paulo Henrique Souza',
+      address: 'SQN 302, Bloco A — Asa Norte',
+      city: 'Brasília, DF',
+      phone: '(61) 93333-2222',
+    },
   },
   {
     id: '16',
@@ -264,6 +381,14 @@ export const petsData: Pet[] = [
     status: 'Disponível',
     vaccinated: true,
     castrated: true,
+    contact: {
+      type: 'tutor',
+      name: 'Silvia Nascimento',
+      address: 'Av. Praia de Ponta Negra, 50 — Ponta Negra',
+      city: 'Natal, RN',
+      phone: '(84) 92222-1111',
+      email: 'silvia.nasc@email.com',
+    },
   },
   {
     id: '17',
@@ -280,6 +405,13 @@ export const petsData: Pet[] = [
     status: 'Disponível',
     vaccinated: true,
     castrated: true,
+    contact: {
+      type: 'tutor',
+      name: 'Diego Ferreira',
+      address: 'Av. Djalma Batista, 1000 — Chapada',
+      city: 'Manaus, AM',
+      phone: '(92) 91111-0000',
+    },
   },
   {
     id: '18',
@@ -296,6 +428,15 @@ export const petsData: Pet[] = [
     status: 'Disponível',
     vaccinated: false,
     castrated: false,
+    contact: {
+      type: 'ong',
+      name: 'Viva Bicho',
+      address: 'Praça da Liberdade, 10 — Boa Vista',
+      city: 'Porto Alegre, RS',
+      phone: '(51) 94321-0987',
+      email: 'contato@vivabicho.org',
+      openingHours: 'Ter–Sáb: 9h–17h',
+    },
   },
   {
     id: '19',
@@ -312,6 +453,13 @@ export const petsData: Pet[] = [
     status: 'Disponível',
     vaccinated: true,
     castrated: false,
+    contact: {
+      type: 'tutor',
+      name: 'Ricardo Tavares',
+      address: 'Tv. Padre Eutíquio, 300 — Batista Campos',
+      city: 'Belém, PA',
+      phone: '(91) 90000-9999',
+    },
   },
   {
     id: '20',
@@ -328,6 +476,15 @@ export const petsData: Pet[] = [
     status: 'Disponível',
     vaccinated: true,
     castrated: true,
+    contact: {
+      type: 'ong',
+      name: 'Patinhas do Bem',
+      address: 'Rua das Flores, 120 — Jardim Paulista',
+      city: 'São Paulo, SP',
+      phone: '(11) 98765-4321',
+      email: 'contato@patinhasbem.org.br',
+      openingHours: 'Seg–Sex: 9h–17h · Sáb: 9h–13h',
+    },
   },
   {
     id: '21',
@@ -344,6 +501,13 @@ export const petsData: Pet[] = [
     status: 'Disponível',
     vaccinated: false,
     castrated: false,
+    contact: {
+      type: 'tutor',
+      name: 'Tatiane Borges',
+      address: 'Av. T-63, 1200 — Jardim Goiás',
+      city: 'Goiânia, GO',
+      phone: '(62) 98889-7777',
+    },
   },
   {
     id: '22',
@@ -360,6 +524,15 @@ export const petsData: Pet[] = [
     status: 'Disponível',
     vaccinated: true,
     castrated: false,
+    contact: {
+      type: 'ong',
+      name: 'Refúgio Animal',
+      address: 'Estrada do Campo, km 5 — Zona Rural',
+      city: 'Belo Horizonte, MG',
+      phone: '(31) 96543-2109',
+      email: 'refugio@refugioanimal.org.br',
+      openingHours: 'Seg–Dom: 8h–18h',
+    },
   },
   {
     id: '23',
@@ -376,6 +549,15 @@ export const petsData: Pet[] = [
     status: 'Disponível',
     vaccinated: true,
     castrated: true,
+    contact: {
+      type: 'ong',
+      name: 'Amigos de Quatro Patas',
+      address: 'Av. Central, 450 — Centro',
+      city: 'Rio de Janeiro, RJ',
+      phone: '(21) 97654-3210',
+      email: 'ong@quatropatas.org',
+      openingHours: 'Seg–Sex: 9h–18h',
+    },
   },
   {
     id: '24',
@@ -392,6 +574,14 @@ export const petsData: Pet[] = [
     status: 'Disponível',
     vaccinated: false,
     castrated: false,
+    contact: {
+      type: 'tutor',
+      name: 'Priscila Cardoso',
+      address: 'Rua Conceição, 500 — Centro',
+      city: 'Campinas, SP',
+      phone: '(19) 97778-6666',
+      email: 'pri.cardoso@email.com',
+    },
   },
   {
     id: '25',
@@ -408,6 +598,15 @@ export const petsData: Pet[] = [
     status: 'Disponível',
     vaccinated: true,
     castrated: true,
+    contact: {
+      type: 'ong',
+      name: 'SOS Pets',
+      address: 'Rua Esperança, 88 — Vila Nova',
+      city: 'Curitiba, PR',
+      phone: '(41) 95432-1098',
+      email: 'sos@sospets.org.br',
+      openingHours: 'Seg–Sex: 10h–18h',
+    },
   },
   {
     id: '26',
@@ -424,6 +623,13 @@ export const petsData: Pet[] = [
     status: 'Disponível',
     vaccinated: true,
     castrated: true,
+    contact: {
+      type: 'tutor',
+      name: 'Leonardo Araújo',
+      address: 'Rua da Consolação, 400 — Consolação',
+      city: 'São Paulo, SP',
+      phone: '(11) 96665-4444',
+    },
   },
   {
     id: '27',
@@ -440,6 +646,15 @@ export const petsData: Pet[] = [
     status: 'Disponível',
     vaccinated: false,
     castrated: false,
+    contact: {
+      type: 'ong',
+      name: 'Amor Animal',
+      address: 'Rua da Comunidade, 33 — Bairro Novo',
+      city: 'Salvador, BA',
+      phone: '(71) 93210-9876',
+      email: 'amor@amoranimal.org.br',
+      openingHours: 'Seg–Sex: 8h–17h · Sáb: 8h–12h',
+    },
   },
   {
     id: '28',
@@ -456,5 +671,13 @@ export const petsData: Pet[] = [
     status: 'Disponível',
     vaccinated: true,
     castrated: false,
+    contact: {
+      type: 'tutor',
+      name: 'Amanda Vieira',
+      address: 'Av. Beira Mar Norte, 2000 — Centro',
+      city: 'Florianópolis, SC',
+      phone: '(48) 95554-3333',
+      email: 'amanda.vieira@email.com',
+    },
   },
 ]

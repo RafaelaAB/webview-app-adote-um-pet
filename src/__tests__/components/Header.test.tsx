@@ -24,10 +24,6 @@ jest.mock('next/image', () => {
   }
 })
 
-/**
- * renderHeader — helper que envolve o Header no SidebarProvider.
- * O Header usa useSidebarContext(), que requer o provider no contexto.
- */
 function renderHeader() {
   return render(
     <SidebarProvider>
@@ -40,8 +36,6 @@ describe('Header', () => {
   beforeEach(() => {
     Object.defineProperty(window, 'scrollY', { writable: true, configurable: true, value: 0 })
   })
-
-  // ── Renderização ──────────────────────────────────────────────────────────
 
   it('renderiza o header', () => {
     renderHeader()
@@ -67,8 +61,6 @@ describe('Header', () => {
     renderHeader()
     expect(screen.getByTestId('header-brand')).toHaveAttribute('aria-label', 'Adote um Pet — página inicial')
   })
-
-  // ── Botões ────────────────────────────────────────────────────────────────
 
   it('renderiza o botão de menu', () => {
     renderHeader()
@@ -107,8 +99,6 @@ describe('Header', () => {
     expect(screen.getByRole('group', { name: 'Ações do usuário' })).toBeInTheDocument()
   })
 
-  // ── Scroll ────────────────────────────────────────────────────────────────
-
   it('não tem classe "scrolled" quando a página não foi rolada', () => {
     renderHeader()
     expect(screen.getByTestId('header')).not.toHaveClass('scrolled')
@@ -141,15 +131,11 @@ describe('Header', () => {
     expect(screen.getByTestId('header')).not.toHaveClass('scrolled')
   })
 
-  // ── Interação ─────────────────────────────────────────────────────────────
-
   it('o botão de menu chama o toggle da sidebar ao ser clicado', () => {
     renderHeader()
     const menuBtn = screen.getByTestId('header-btn-menu')
     expect(() => fireEvent.click(menuBtn)).not.toThrow()
   })
-
-  // ── Logo ──────────────────────────────────────────────────────────────────
 
   it('exibe a imagem do logo com alt vazio (decorativa, texto já presente)', () => {
     renderHeader()

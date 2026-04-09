@@ -16,7 +16,6 @@ jest.mock('next/link', () => {
 
 jest.mock('next/image', () => {
   return function MockImage({ src, alt }: { src: string; alt: string }) {
-    // eslint-disable-next-line @next/next/no-img-element
     return <img src={src} alt={alt} />
   }
 })
@@ -38,7 +37,6 @@ const mockPet: Pet = {
 }
 
 describe('PetCard', () => {
-  // ── Link e navegação ──────────────────────────────────────────────────────
 
   it('renderiza o card como link para /pets/1', () => {
     render(<PetCard pet={mockPet} />)
@@ -52,8 +50,6 @@ describe('PetCard', () => {
     expect(card).toHaveAttribute('aria-label', expect.stringContaining('Labrador Retriever'))
     expect(card).toHaveAttribute('aria-label', expect.stringContaining('Disponível'))
   })
-
-  // ── Conteúdo ──────────────────────────────────────────────────────────────
 
   it('exibe o nome do pet', () => {
     render(<PetCard pet={mockPet} />)
@@ -80,14 +76,10 @@ describe('PetCard', () => {
     expect(screen.getByTestId('pet-card-location-1')).toHaveTextContent('São Paulo, SP')
   })
 
-  // ── Imagem ────────────────────────────────────────────────────────────────
-
   it('renderiza a imagem com alt descritivo', () => {
     render(<PetCard pet={mockPet} />)
     expect(screen.getByAltText('Foto de Rex')).toBeInTheDocument()
   })
-
-  // ── Badges ────────────────────────────────────────────────────────────────
 
   it('exibe o badge de categoria com emoji de cachorro', () => {
     render(<PetCard pet={mockPet} />)
@@ -110,8 +102,6 @@ describe('PetCard', () => {
     render(<PetCard pet={{ ...mockPet, status: 'Adotado' }} />)
     expect(screen.getByTestId('pet-card-status-1')).toHaveClass('statusPending')
   })
-
-  // ── Categorias ────────────────────────────────────────────────────────────
 
   it('exibe emoji correto para gato', () => {
     render(<PetCard pet={{ ...mockPet, id: '2', category: 'Gato' }} />)

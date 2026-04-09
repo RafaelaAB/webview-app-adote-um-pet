@@ -59,7 +59,7 @@ describe('petsData', () => {
 
   it('imagens são URLs válidas', () => {
     petsData.forEach((pet) => {
-      expect(pet.image).toMatch(/^https?:\/\//)
+      expect(pet.image).toMatch(/^https?:\/\
     })
   })
 

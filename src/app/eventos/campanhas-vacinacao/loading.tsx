@@ -1,7 +1,3 @@
-/**
- * LOADING STATE — Campanhas de Vacinação (/eventos/campanhas-vacinacao)
- */
-
 import Skeleton from '@/components/Skeleton/Skeleton'
 import { EventoPageSkeleton } from '../campanhas-adocao/loading'
 import styles from '../campanhas-adocao/eventos-loading.module.css'
