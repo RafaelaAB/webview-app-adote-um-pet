@@ -1,16 +1,5 @@
 'use client'
 
-/**
- * PÁGINA DE ADOÇÃO — rota: /adotar/[id]
- *
- * Exibe todas as informações necessárias para adotar um pet específico:
- *   - Resumo do pet e dados do responsável (ONG ou tutor)
- *   - Passo a passo do processo de adoção
- *   - Requisitos do adotante
- *   - Documentos necessários
- *   - Botões de contato direto (WhatsApp e e-mail)
- */
-
 import { useParams } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -134,12 +123,10 @@ export default function AdotarPage() {
 
         <div className={styles.layout}>
 
-          {/* ── Coluna de conteúdo ─────────────────────────────────── */}
           <div className={styles.content}>
 
-            {/* Cabeçalho */}
             <header className={styles.pageHeader}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
+
               <img
                 src={pet.image}
                 alt={`Foto de ${pet.name}`}
@@ -156,7 +143,6 @@ export default function AdotarPage() {
               </div>
             </header>
 
-            {/* Passo a passo */}
             <section className={styles.card} aria-labelledby="steps-title">
               <h2 className={styles.cardTitle} id="steps-title">
                 <span className={styles.cardTitleIcon} aria-hidden="true">
@@ -177,7 +163,6 @@ export default function AdotarPage() {
               </ol>
             </section>
 
-            {/* Requisitos */}
             <section className={styles.card} aria-labelledby="req-title">
               <h2 className={styles.cardTitle} id="req-title">
                 <span className={styles.cardTitleIcon} aria-hidden="true">
@@ -209,7 +194,6 @@ export default function AdotarPage() {
               </ul>
             </section>
 
-            {/* Documentos */}
             <section className={styles.card} aria-labelledby="docs-title">
               <h2 className={styles.cardTitle} id="docs-title">
                 <span className={styles.cardTitleIcon} aria-hidden="true">
@@ -229,10 +213,8 @@ export default function AdotarPage() {
 
           </div>
 
-          {/* ── Sidebar ────────────────────────────────────────────── */}
           <aside className={styles.sidebar} aria-label="Informações do pet e contato">
 
-            {/* Card do pet */}
             <div className={styles.petCard}>
               <div className={styles.petCardImage}>
                 <Image
@@ -266,14 +248,12 @@ export default function AdotarPage() {
               </div>
             </div>
 
-            {/* Card de contato */}
             <ContactCard
               contact={pet.contact}
               petName={pet.name}
               data-testid="adotar-contact-card"
             />
 
-            {/* Link para ver perfil completo */}
             <Link
               href={ROUTES.PET_DETAIL(pet.id)}
               style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, fontSize: '0.875rem', color: 'var(--color-text-muted)', fontWeight: 500 }}

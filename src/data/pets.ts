@@ -1,11 +1,3 @@
-/**
- * DADOS MOCK DOS PETS
- *
- * Lista expandida com 28 pets para tornar a paginação visível e funcional.
- * Imagens via loremflickr.com — busca fotos reais do Flickr por palavra-chave.
- * O parâmetro ?lock=N garante sempre a mesma foto para o mesmo número.
- */
-
 import { Pet } from '@/types'
 
 export const petsData: Pet[] = [

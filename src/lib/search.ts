@@ -1,16 +1,5 @@
-/**
- * BUSCA GLOBAL — adote-um-pet
- *
- * Centraliza a lógica de busca em todos os conteúdos do site:
- *   - Pets (nome, raça, categoria, localização, descrição)
- *   - ONGs (nome, cidade, descrição, formas de ajudar)
- *   - Páginas estáticas (título, palavras-chave)
- */
-
 import { Pet } from '@/types'
 import { Ong } from '@/data/ongs'
-
-// ── Tipos de resultado ───────────────────────────────────────────────────────
 
 export interface PetResult {
   type: 'pet'
@@ -40,8 +29,6 @@ export interface PageResult {
 }
 
 export type SearchResult = PetResult | OngResult | PageResult
-
-// ── Páginas estáticas indexadas ─────────────────────────────────────────────
 
 const STATIC_PAGES: PageResult[] = [
   {
@@ -94,8 +81,6 @@ const STATIC_PAGES: PageResult[] = [
   },
 ]
 
-// ── Helpers ──────────────────────────────────────────────────────────────────
-
 const CATEGORY_EMOJI: Record<string, string> = {
   Cachorro: '🐶',
   Gato: '🐱',
@@ -108,8 +93,6 @@ function matches(fields: string[], query: string): boolean {
   const q = query.toLowerCase().trim()
   return fields.some((f) => f.toLowerCase().includes(q))
 }
-
-// ── Funções de busca por tipo ────────────────────────────────────────────────
 
 export function searchPets(pets: Pet[], query: string): PetResult[] {
   if (!query.trim()) return []
@@ -152,8 +135,6 @@ export function searchPages(query: string): PageResult[] {
     matches([page.title, page.subtitle, ...page.keywords], query)
   )
 }
-
-// ── Busca unificada ──────────────────────────────────────────────────────────
 
 export interface GlobalSearchResults {
   pets: PetResult[]

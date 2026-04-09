@@ -1,12 +1,5 @@
 'use client'
 
-/**
- * PÁGINA DE RESULTADOS DE BUSCA GLOBAL
- * Rota: /busca?q=termo
- *
- * Exibe resultados agrupados por tipo: Pets, ONGs e Páginas.
- */
-
 import { Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -40,7 +33,6 @@ function BuscaResults() {
 
         <BackButton />
 
-        {/* Cabeçalho */}
         <div className={styles.pageHeader}>
           <h1 data-testid="busca-title" className={styles.pageTitle}>
             Resultados para{' '}
@@ -56,7 +48,6 @@ function BuscaResults() {
           )}
         </div>
 
-        {/* ── Grupo: Pets ──────────────────────────────────────────── */}
         {!loading && petResults.length > 0 && (
           <section aria-labelledby="busca-section-pets" className={styles.section}>
             <h2 id="busca-section-pets" className={styles.sectionTitle}>
@@ -73,7 +64,6 @@ function BuscaResults() {
           </section>
         )}
 
-        {/* ── Grupo: ONGs ──────────────────────────────────────────── */}
         {!loading && ongResults.length > 0 && (
           <section aria-labelledby="busca-section-ongs" className={styles.section}>
             <h2 id="busca-section-ongs" className={styles.sectionTitle}>
@@ -104,7 +94,6 @@ function BuscaResults() {
           </section>
         )}
 
-        {/* ── Grupo: Páginas ───────────────────────────────────────── */}
         {!loading && pageResults.length > 0 && (
           <section aria-labelledby="busca-section-pages" className={styles.section}>
             <h2 id="busca-section-pages" className={styles.sectionTitle}>
@@ -130,7 +119,6 @@ function BuscaResults() {
           </section>
         )}
 
-        {/* ── Estado vazio ─────────────────────────────────────────── */}
         {isEmpty && (
           <div data-testid="busca-empty" className={styles.empty} role="status">
             <span className={styles.emptyEmoji} aria-hidden="true">🐾</span>

@@ -1,13 +1,5 @@
 'use client'
 
-/**
- * PÁGINA: ONGs Parceiras
- * Rota: /ongs
- *
- * Lista as organizações parceiras com informações de contato e formas de ajudar.
- * Inclui seção de incentivo à doação para manutenção dos resgates.
- */
-
 import { useRouter } from 'next/navigation'
 import { ArrowLeft, Building2, MapPin, Phone, Mail, Heart } from 'lucide-react'
 import { ongs } from '@/data/ongs'
@@ -25,7 +17,6 @@ export default function OngsPage() {
     <div data-testid="ongs-page" className={styles.page}>
       <div className="container">
 
-        {/* Navegação de volta */}
         <button
           data-testid="ongs-btn-back"
           className={styles.backBtn}
@@ -37,7 +28,6 @@ export default function OngsPage() {
           <span>Voltar</span>
         </button>
 
-        {/* Cabeçalho */}
         <header className={styles.pageHeader}>
           <span className={styles.iconWrapper} aria-hidden="true">
             <Building2 size={40} strokeWidth={1.5} />
@@ -51,7 +41,6 @@ export default function OngsPage() {
           </p>
         </header>
 
-        {/* Banner de incentivo à doação */}
         <section
           data-testid="ongs-donation-banner"
           className={styles.donationBanner}
@@ -91,7 +80,6 @@ export default function OngsPage() {
           </div>
         </section>
 
-        {/* Listagem de ONGs */}
         <section aria-labelledby="ongs-list-title">
           <h2 id="ongs-list-title" className={styles.sectionTitle}>
             Organizações cadastradas
@@ -108,7 +96,7 @@ export default function OngsPage() {
                 data-testid={`ong-card-${ong.id}`}
                 className={styles.card}
               >
-                {/* Cabeçalho do card */}
+
                 <div className={styles.cardHeader}>
                   <div className={styles.cardAvatar} aria-hidden="true">
                     <Heart size={22} strokeWidth={2} />
@@ -123,12 +111,10 @@ export default function OngsPage() {
                   </div>
                 </div>
 
-                {/* Descrição */}
                 <p className={styles.cardDescription}>{ong.description}</p>
 
                 <hr className={styles.cardDivider} />
 
-                {/* Contato */}
                 <address className={styles.contactList}>
                   <div className={styles.contactItem}>
                     <MapPin
@@ -173,7 +159,6 @@ export default function OngsPage() {
 
                 <hr className={styles.cardDivider} />
 
-                {/* Como ajudar */}
                 <div>
                   <p className={styles.helpTitle} aria-label={`Como ajudar ${ong.name}`}>
                     Como ajudar
@@ -188,7 +173,6 @@ export default function OngsPage() {
                   </ul>
                 </div>
 
-                {/* PIX */}
                 {ong.pixKey && (
                   <div className={styles.pixBlock} aria-label={`Chave PIX de ${ong.name}`}>
                     <span className={styles.pixLabel}>PIX</span>

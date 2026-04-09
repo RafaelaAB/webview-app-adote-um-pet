@@ -1,7 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import Button from '@/components/Button/Button'
 
-// next/link é um componente complexo — mockamos como <a> simples para testes unitários
 jest.mock('next/link', () => {
   return function MockLink({ href, children, className, 'data-testid': testId }: {
     href: string

@@ -23,7 +23,6 @@ export default function SearchModal({ onClose }: SearchModalProps) {
 
   const hasQuery = query.trim().length > 0
 
-  // Preview: até 4 pets, 2 ONGs, 3 páginas
   const previewPets = petResults.slice(0, 4)
   const previewOngs = ongResults.slice(0, 2)
   const previewPages = pageResults.slice(0, 3)
@@ -81,7 +80,6 @@ export default function SearchModal({ onClose }: SearchModalProps) {
     >
       <div className={styles.modal}>
 
-        {/* Campo de busca */}
         <form onSubmit={handleSubmit} role="search">
           <div className={styles.inputRow}>
             <Search
@@ -114,10 +112,8 @@ export default function SearchModal({ onClose }: SearchModalProps) {
           </div>
         </form>
 
-        {/* Resultados */}
         <div className={styles.results} role="listbox" aria-label="Resultados da busca">
 
-          {/* Estado inicial */}
           {!hasQuery && (
             <div className={styles.hint} aria-live="polite">
               <Search size={16} aria-hidden="true" />
@@ -125,7 +121,6 @@ export default function SearchModal({ onClose }: SearchModalProps) {
             </div>
           )}
 
-          {/* Nenhum resultado */}
           {hasQuery && total === 0 && (
             <div
               data-testid="search-empty"
@@ -155,7 +150,6 @@ export default function SearchModal({ onClose }: SearchModalProps) {
             </div>
           )}
 
-          {/* Grupo: Pets */}
           {hasQuery && previewPets.length > 0 && (
             <>
               <div className={styles.groupLabel} aria-hidden="true">
@@ -171,7 +165,7 @@ export default function SearchModal({ onClose }: SearchModalProps) {
                   className={styles.resultItem}
                   onClick={() => handleNavigate(pet.href)}
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
+
                   <img
                     src={pet.image}
                     alt=""
@@ -188,7 +182,6 @@ export default function SearchModal({ onClose }: SearchModalProps) {
             </>
           )}
 
-          {/* Grupo: ONGs */}
           {hasQuery && previewOngs.length > 0 && (
             <>
               <div className={styles.groupLabel} aria-hidden="true">
@@ -217,7 +210,6 @@ export default function SearchModal({ onClose }: SearchModalProps) {
             </>
           )}
 
-          {/* Grupo: Páginas */}
           {hasQuery && previewPages.length > 0 && (
             <>
               <div className={styles.groupLabel} aria-hidden="true">
@@ -249,7 +241,6 @@ export default function SearchModal({ onClose }: SearchModalProps) {
           )}
         </div>
 
-        {/* Rodapé: ver todos os resultados */}
         {hasQuery && total > 0 && (
           <div className={styles.footer}>
             <button

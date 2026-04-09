@@ -1,12 +1,3 @@
-/**
- * COMPONENTE: Footer
- *
- * Rodapé da aplicação. Exibe:
- *   - Logo e nome da marca
- *   - Créditos da desenvolvedora
- *   - Links para GitHub e Instagram
- */
-
 import { Github, Instagram, Heart } from 'lucide-react'
 import styles from './Footer.module.css'
 
@@ -15,9 +6,8 @@ export default function Footer() {
     <footer data-testid="footer" className={styles.footer} role="contentinfo">
       <div className={`container ${styles.inner}`}>
 
-        {/* Identidade visual da marca */}
         <div data-testid="footer-brand" className={styles.brand}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
+
           <img
             src="/logo-icon.svg"
             alt=""
@@ -29,7 +19,6 @@ export default function Footer() {
           <span className={styles.brandName}>Adote um Pet</span>
         </div>
 
-        {/* Créditos da desenvolvedora */}
         <p className={styles.credits}>
           Desenvolvido com{' '}
           <Heart size={14} className={styles.heartIcon} aria-hidden="true" />{' '}
@@ -38,7 +27,6 @@ export default function Footer() {
           <strong>Rafaela Andrade Batista</strong>
         </p>
 
-        {/* Links para redes sociais */}
         <nav aria-label="Redes sociais" className={styles.socials}>
           <a
             data-testid="footer-link-github"

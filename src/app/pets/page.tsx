@@ -1,11 +1,5 @@
 'use client'
 
-/**
- * PÁGINA DE LISTAGEM DE PETS — rota: /pets
- *
- * Exibe todos os pets com filtro por categoria e paginação.
- */
-
 import { useState } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { usePets } from '@/hooks/usePets'
@@ -75,7 +69,6 @@ export default function PetsPage() {
 
         <BackButton data-testid="pets-btn-back" />
 
-        {/* Cabeçalho da página */}
         <div className={styles.pageHeader}>
           <h1 data-testid="pets-title" className={styles.pageTitle}>Todos os pets</h1>
           <p data-testid="pets-subtitle" className={styles.pageSubtitle}>
@@ -84,7 +77,6 @@ export default function PetsPage() {
           </p>
         </div>
 
-        {/* Filtros de categoria */}
         <div
           data-testid="pets-filters"
           className={styles.filters}
@@ -106,7 +98,6 @@ export default function PetsPage() {
           ))}
         </div>
 
-        {/* Barra de controles: contagem + seletor de itens por página */}
         {!loading && totalItems > 0 && (
           <div data-testid="pets-controls" className={styles.controls}>
             <p data-testid="pets-results-count" className={styles.resultsCount}>
@@ -133,7 +124,6 @@ export default function PetsPage() {
           </div>
         )}
 
-        {/* Grid de pets */}
         {loading ? (
           <div data-testid="pets-loading" className={styles.grid}>
             {Array.from({ length: perPage > 10 ? 10 : perPage }).map((_, i) => (
@@ -153,7 +143,6 @@ export default function PetsPage() {
           </div>
         )}
 
-        {/* Paginação */}
         {!loading && totalPages > 1 && (
           <nav data-testid="pets-pagination" className={styles.pagination} aria-label="Paginação">
 

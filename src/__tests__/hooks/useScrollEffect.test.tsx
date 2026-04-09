@@ -3,7 +3,6 @@ import { useScrollEffect } from '@/hooks/useScrollEffect'
 
 describe('useScrollEffect', () => {
   beforeEach(() => {
-    // Reseta scrollY para 0 antes de cada teste
     Object.defineProperty(window, 'scrollY', { writable: true, configurable: true, value: 0 })
   })
 

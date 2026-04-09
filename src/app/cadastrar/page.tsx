@@ -1,11 +1,5 @@
 'use client'
 
-/**
- * PÁGINA DE CADASTRO DE PET — rota: /cadastrar
- *
- * Formulário para registrar um novo pet para adoção.
- */
-
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { CheckCircle } from 'lucide-react'
@@ -81,7 +75,6 @@ export default function CadastrarPage() {
     }
   }
 
-  // Tela de sucesso após envio
   if (submitted) {
     return (
       <div className={styles.page}>
@@ -132,7 +125,7 @@ export default function CadastrarPage() {
           className={styles.form}
           noValidate
         >
-          {/* ── Seção 1: Informações do pet ── */}
+
           <fieldset className={styles.fieldset}>
             <legend className={styles.legend}>Informações do pet</legend>
 
@@ -235,7 +228,6 @@ export default function CadastrarPage() {
             />
           </fieldset>
 
-          {/* ── Seção 2: Informações de contato ── */}
           <fieldset className={styles.fieldset}>
             <legend className={styles.legend}>Informações de contato</legend>
 
@@ -263,7 +255,6 @@ export default function CadastrarPage() {
             </div>
           </fieldset>
 
-          {/* Ações do formulário */}
           <div className={styles.formActions}>
             <Button type="submit" size="lg" data-testid="register-btn-submit">
               Cadastrar pet

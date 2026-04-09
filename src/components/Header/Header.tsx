@@ -1,20 +1,5 @@
 'use client'
 
-/**
- * COMPONENTE: Header
- *
- * Barra de navegação fixa no topo da página. Contém:
- *   - Botão de menu (hambúrguer) à esquerda
- *   - Logo/nome da marca ao centro, que leva para a home ao clicar
- *   - Botões de busca e perfil à direita
- *
- * Comportamento de scroll:
- * ─────────────────────────
- * Usa o hook useScrollEffect para detectar quando o usuário rola a página.
- * Quando rolado mais de 10px, adiciona a classe CSS "scrolled" ao header,
- * que aplica sombra e fundo mais opaco (definido no Header.module.css).
- */
-
 import { useState } from 'react'
 import Link from 'next/link'
 import { Menu, Search, User } from 'lucide-react'
@@ -37,7 +22,6 @@ export default function Header() {
       >
         <div className={`container ${styles.inner}`}>
 
-          {/* Botão de menu hambúrguer — abre/fecha a sidebar ao clicar */}
           <button
             data-testid="header-btn-menu"
             className={styles.iconBtn}
@@ -50,17 +34,13 @@ export default function Header() {
             <Menu size={24} strokeWidth={2} aria-hidden="true" />
           </button>
 
-          {/*
-           * Logo da marca — Link navega para a home page ao clicar.
-           * Usa <img> diretamente (não next/image) porque next/image não suporta SVG.
-           */}
           <Link
             href="/"
             className={styles.brand}
             data-testid="header-brand"
             aria-label="Adote um Pet — página inicial"
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
+
             <img
               src="/logo-icon.svg"
               alt=""
@@ -72,7 +52,6 @@ export default function Header() {
             <span className={styles.brandText}>Adote um Pet</span>
           </Link>
 
-          {/* Grupo de ações à direita da barra */}
           <div className={styles.actions} role="group" aria-label="Ações do usuário">
             <button
               data-testid="header-btn-search"
@@ -98,7 +77,6 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Modal de busca — renderizado fora do header para não herdar z-index/overflow */}
       {isSearchOpen && (
         <SearchModal onClose={() => setIsSearchOpen(false)} />
       )}

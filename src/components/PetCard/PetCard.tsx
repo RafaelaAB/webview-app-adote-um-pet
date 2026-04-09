@@ -1,15 +1,5 @@
 'use client'
 
-/**
- * COMPONENTE: PetCard
- *
- * Card clicável que exibe as informações resumidas de um pet.
- * É usado nas páginas de listagem (home e /pets).
- *
- * Ao clicar no card, o usuário navega para a página de detalhe
- * daquele pet (/pets/[id]), usando o componente <Link> do Next.js.
- */
-
 import Link from 'next/link'
 import Image from 'next/image'
 import { MapPin } from 'lucide-react'
@@ -36,7 +26,7 @@ export default function PetCard({ pet }: PetCardProps) {
       data-testid="pet-card"
       aria-label={`${pet.name} — ${pet.breed}, ${pet.age}, ${pet.gender}. ${pet.status}. Ver detalhes`}
     >
-      {/* Imagem do pet */}
+
       <div className={styles.imageWrapper}>
         <Image
           src={pet.image}
@@ -60,7 +50,6 @@ export default function PetCard({ pet }: PetCardProps) {
         </span>
       </div>
 
-      {/* Informações textuais do pet */}
       <div className={styles.info}>
         <h3 className={styles.name} data-testid={`pet-card-name-${pet.id}`}>{pet.name}</h3>
         <p className={styles.breed} data-testid={`pet-card-breed-${pet.id}`}>{pet.breed}</p>

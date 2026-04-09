@@ -12,8 +12,6 @@ describe('Footer', () => {
     render(<Footer />)
   })
 
-  // ── Estrutura e semântica ─────────────────────────────────────────────────
-
   it('renderiza o elemento footer', () => {
     expect(screen.getByTestId('footer')).toBeInTheDocument()
   })
@@ -22,8 +20,6 @@ describe('Footer', () => {
     expect(screen.getByRole('contentinfo')).toBeInTheDocument()
   })
 
-  // ── Marca ─────────────────────────────────────────────────────────────────
-
   it('exibe o nome da marca "Adote um Pet"', () => {
     expect(screen.getByTestId('footer-brand')).toHaveTextContent('Adote um Pet')
   })
@@ -31,8 +27,6 @@ describe('Footer', () => {
   it('exibe o nome da desenvolvedora', () => {
     expect(screen.getByText('Rafaela Andrade Batista')).toBeInTheDocument()
   })
-
-  // ── Links sociais ─────────────────────────────────────────────────────────
 
   it('a navegação de redes sociais tem aria-label', () => {
     expect(screen.getByRole('navigation', { name: 'Redes sociais' })).toBeInTheDocument()

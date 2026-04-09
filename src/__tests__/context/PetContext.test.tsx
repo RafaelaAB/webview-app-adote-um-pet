@@ -2,7 +2,6 @@ import { render, screen, waitFor, act } from '@testing-library/react'
 import { PetProvider, usePetContext } from '@/context/PetContext'
 import { petsData } from '@/data/pets'
 
-// Componente auxiliar para expor o contexto na tela e facilitar os asserts
 function ContextConsumer() {
   const { pets, loading, getPetById, filterPets } = usePetContext()
   const dog = getPetById('1')
@@ -137,7 +136,6 @@ describe('PetProvider', () => {
 
 describe('usePetContext fora do Provider', () => {
   it('lança erro quando usado fora do PetProvider', () => {
-    // Suprime o console.error do React durante o teste de erro esperado
     const spy = jest.spyOn(console, 'error').mockImplementation(() => {})
 
     function BrokenComponent() {
