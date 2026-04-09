@@ -216,7 +216,7 @@ export default function PetDetailPage() {
             {/* Botão de adoção */}
             <Button
               as="link"
-              href="/cadastrar"
+              href={`/adotar/${pet.id}`}
               size="lg"
               fullWidth
               data-testid="pet-detail-btn-adopt"

@@ -16,10 +16,11 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { X, House, PawPrint, Plus, Calendar, MapPin, Syringe, ChevronDown } from 'lucide-react'
+import { X, House, PawPrint, Plus, Calendar, MapPin, Syringe, ChevronDown, Building2 } from 'lucide-react'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useSidebarContext } from '@/context/SidebarContext'
 import { createLogger } from '@/lib/logger'
+import { ROUTES } from '@/lib/routes'
 import styles from './Sidebar.module.css'
 
 const log = createLogger('Sidebar')
@@ -50,18 +51,23 @@ function isNavGroup(item: MenuItem): item is NavGroup {
 const MENU_ITEMS: MenuItem[] = [
   {
     label: 'Home',
-    href: '/',
+    href: ROUTES.HOME,
     icon: <House size={20} strokeWidth={2} />,
   },
   {
     label: 'Adote um Pet',
-    href: '/pets',
+    href: ROUTES.PETS,
     icon: <PawPrint size={20} strokeWidth={2} />,
   },
   {
     label: 'Cadastre um Pet',
-    href: '/cadastrar',
+    href: ROUTES.REGISTER,
     icon: <Plus size={20} strokeWidth={2} />,
+  },
+  {
+    label: 'ONGs',
+    href: ROUTES.ONGS,
+    icon: <Building2 size={20} strokeWidth={2} />,
   },
   {
     label: 'Eventos',
@@ -69,12 +75,12 @@ const MENU_ITEMS: MenuItem[] = [
     children: [
       {
         label: 'Campanhas de adoção em sua cidade',
-        href: '/eventos/campanhas-adocao',
+        href: ROUTES.EVENTOS.CAMPANHAS_ADOCAO,
         icon: <MapPin size={16} strokeWidth={2} />,
       },
       {
         label: 'Campanhas de vacinação',
-        href: '/eventos/campanhas-vacinacao',
+        href: ROUTES.EVENTOS.CAMPANHAS_VACINACAO,
         icon: <Syringe size={16} strokeWidth={2} />,
       },
     ],
